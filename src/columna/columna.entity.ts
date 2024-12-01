@@ -1,5 +1,7 @@
-import { Entity, Property, ManyToMany, Collection } from "@mikro-orm/core";
+import { Entity, Property, ManyToMany, Collection, OneToOne } from "@mikro-orm/core";
 import { Base } from "../shared/db/base.entity.js";
+import { Mantenimiento } from "../mantenimiento/mantenimiento.entity.js";
+import { ServicioLuz } from "../servicioLuz/servicioLuz.entity.js";
 
 @Entity()
 export class Columna extends Base {
@@ -14,6 +16,9 @@ export class Columna extends Base {
 
     @Property({nullable: true})
     fechaInstalacion!: Date;
+
+    @OneToOne(() => ServicioLuz, { nullable: true }) 
+    servicio!: ServicioLuz;
 
 }
 
