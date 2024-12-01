@@ -1,4 +1,4 @@
-import { Entity, Property, ManyToMany, Collection, ManyToOne } from "@mikro-orm/core";
+import { Entity, Property, ManyToMany, Collection, ManyToOne, Rel } from "@mikro-orm/core";
 import { Base } from "../shared/db/base.entity.js";
 import { Mantenimiento } from "../mantenimiento/mantenimiento.entity.js";
 
@@ -14,5 +14,5 @@ export class Tarea extends Base {
     frecuenciaMantenimiento!: Number;
 
     @ManyToOne(() => Mantenimiento, { nullable: false })
-    mantenimiento!: Mantenimiento;
+    mantenimiento!: Rel<Mantenimiento>;
 }

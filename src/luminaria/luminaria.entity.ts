@@ -1,4 +1,4 @@
-import { Entity, Property, ManyToMany, Collection, ManyToOne } from "@mikro-orm/core";
+import { Entity, Property, ManyToMany, Collection, ManyToOne, Rel } from "@mikro-orm/core";
 import { Base } from "../shared/db/base.entity.js";
 import { ServicioLuz } from "../servicioLuz/servicioLuz.entity.js";
 import { Mantenimiento } from "../mantenimiento/mantenimiento.entity.js";
@@ -27,7 +27,7 @@ export class Luminaria extends Base {
     serviciosLuz = new Collection<ServicioLuz>(this);
 
     @ManyToOne(() => Mantenimiento, { nullable: true })
-    mantenimiento!: Mantenimiento;
+    mantenimiento!: Rel<Mantenimiento>;
 
 }
 

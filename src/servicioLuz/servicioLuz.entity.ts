@@ -24,7 +24,9 @@ export class ServicioLuz extends Base {
     // Hay que ver si las relaciones son las correctas, pareciera que no
 
 
-    @OneToMany('Mantenimiento', 'Servicio')
+    @OneToMany(() => Mantenimiento, (mantenimiento) => mantenimiento.servicio, {
+        cascade: [Cascade.ALL],
+    })
     mantenimientos = new Collection<Mantenimiento>(this);
 
 

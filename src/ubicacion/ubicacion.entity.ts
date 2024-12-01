@@ -2,7 +2,7 @@ import { Entity, Property, ManyToMany, Collection } from "@mikro-orm/core";
 import { Base } from "../shared/db/base.entity.js";
 
 @Entity()
-export class ubicacion extends Base {
+export class Ubicacion extends Base {
     @Property({nullable: false, unique: true})
     calle!: String;    
     

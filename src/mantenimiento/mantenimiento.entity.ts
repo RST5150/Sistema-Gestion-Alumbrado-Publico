@@ -29,15 +29,22 @@ export class Mantenimiento extends Base {
     @ManyToOne(() => ServicioLuz, { nullable: true })
     servicio!: Rel<ServicioLuz>;  // El Rel<> soluciona el problema de dependecia circular, eso dice la documentacion de mikroOrm
 
-    @OneToMany('tarea', 'Mantenimiento')
+    @OneToMany(() => Tarea, (tarea) => tarea.mantenimiento, {
+        cascade: [Cascade.ALL],
+    })
     tareas = new Collection<Tarea>(this);
-    @ManyToOne(() => Empleado, { nullable: true })
-    empleado!: Empleado;
 
-    @OneToMany('Luminaria', 'Mantenimiento')
+    @ManyToOne(() => Empleado, { nullable: true })
+    empleado!: Rel<Empleado>;
+
+    @OneToMany(() => Luminaria, (luminaria) => luminaria.mantenimiento, {
+        cascade: [Cascade.ALL],
+    })
     luminarias = new Collection<Luminaria>(this);
 
-    @OneToMany('equipoAuxiliar', 'Mantenimiento')
+    @OneToMany(() => EquipoAux, (equipoAux) => equipoAux.mantenimiento, {
+        cascade: [Cascade.ALL],
+    })
     equiposAux = new Collection<EquipoAux>(this);
 }
 

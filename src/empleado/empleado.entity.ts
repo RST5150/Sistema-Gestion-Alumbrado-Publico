@@ -1,4 +1,4 @@
-import { Entity, Property, OneToMany, Collection } from "@mikro-orm/core";
+import { Entity, Property, OneToMany, Collection, Cascade } from "@mikro-orm/core";
 import { Base } from "../shared/db/base.entity.js";
 import { Mantenimiento } from "../mantenimiento/mantenimiento.entity.js";
 
@@ -22,7 +22,9 @@ export class Empleado extends Base {
     @Property({nullable: false})
     fechaIngreso!: Date;
 
-    @OneToMany('mantenimiento', 'empleado')
+    @OneToMany(() => Mantenimiento, (mantenimiento) => mantenimiento.empleado, {
+    cascade: [Cascade.ALL],
+})
     mantenimientos = new Collection<Mantenimiento>(this);
 }
 
