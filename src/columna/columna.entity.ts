@@ -1,6 +1,5 @@
 import { Entity, Property, ManyToMany, Collection, OneToOne } from "@mikro-orm/core";
 import { Base } from "../shared/db/base.entity.js";
-import { Mantenimiento } from "../mantenimiento/mantenimiento.entity.js";
 import { ServicioLuz } from "../servicioLuz/servicioLuz.entity.js";
 
 @Entity()
