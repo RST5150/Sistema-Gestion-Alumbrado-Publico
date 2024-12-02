@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { Columna } from "./columna.entity.js";
-import { validateColumna } from "./columna.schema.js";
+import { validarColumna, validarColumnaOpcional } from "./columna.schema.js";
 import { orm } from "../shared/db/orm.js";
 
 // Mensajes
@@ -39,7 +39,7 @@ async function add(req: Request, res: Response) {
 async function update(req: Request, res: Response) {
     try {
         const columna = await em.findOneOrFail(Columna, {id: res.locals.id})
-        em.assign(columna, res.locals.sanitizedInput)
+        em.assign(columna, res.locals.sanitizedPartialInput)
         await em.flush()
         res.json({message: "Columna actualizada", data: columna})
     } catch (err) {
@@ -63,7 +63,7 @@ async function remove(req: Request, res: Response) {
 
 function validateExists(req: Request, res: Response, next: NextFunction) {
     const id = parseInt(req.params.id);
-
+    
     if (Number.isNaN(id))
         return res.status(400).json({message: "El id debe ser un número entero"})
 
@@ -73,20 +73,24 @@ function validateExists(req: Request, res: Response, next: NextFunction) {
 }
 
 async function sanitizeInput(req: Request, res: Response, next: NextFunction) {
-    const incoming = await validateColumna(req.body)
+    const incoming = await validarColumna(req.body)
     if (!incoming.success)
         return res.status(400).json({message: incoming.issues[0].message})
     const columnaNueva = incoming.output
 
-    res.locals.columnaNueva = columnaNueva
+    res.locals.sanitizedInput = columnaNueva
 
-    const sanitizedInput = res.locals.columnaNueva
+    next()
+}
 
-    Object.keys(sanitizedInput).forEach((key) => {
-        if (sanitizedInput[key] === undefined) {
-            delete sanitizedInput[key];
-        }
-    });
+async function sanitizePartialInput(req: Request, res: Response, next: NextFunction) {
+    const incoming = await validarColumnaOpcional(req.body)
+    
+    if (!incoming.success)
+        return res.status(400).json({message: incoming.issues[0].message})
+    const columnaNueva = incoming.output
+
+    res.locals.sanitizedPartialInput = columnaNueva
 
     next()
 }
@@ -122,4 +126,4 @@ async function sanitizeInput(req: Request, res: Response, next: NextFunction) {
        res.status(500).json({ message: ERR_500 })
      }
 
-export { findAll, findOne, add, update, remove, validateExists, sanitizeInput }
+export { findAll, findOne, add, update, remove, validateExists, sanitizeInput, sanitizePartialInput }
