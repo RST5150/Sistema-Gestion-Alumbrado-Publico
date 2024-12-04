@@ -34,19 +34,19 @@ const fechaAdquisicion = v.pipe(
     v.maxValue(FECHA_MAX, ERR_FECHA),
 )
 
-const fechaInstalacion = v.optional(v.pipe(
+const fechaInstalacion = v.pipe(
     v.string(),
     v.isoDate(ERR_FECHA),
     v.minValue(FECHA_MIN, ERR_FECHA),
     v.maxValue(FECHA_MAX, ERR_FECHA),
-))
+)
 
 export const columnaSchema = v.object({
     nroSerie: nroSerie,
     material: material,
     fechaAdquisicion: fechaAdquisicion,
     fechaInstalacion: v.optional(fechaInstalacion),
-    review: v.optional(v.array(id)),
+    idServicio: v.optional(id),
 })
 
 export const columnaOpcional = v.partial(columnaSchema)

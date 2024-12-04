@@ -126,4 +126,6 @@ async function sanitizePartialInput(req: Request, res: Response, next: NextFunct
        res.status(500).json({ message: ERR_500 })
      }
 
+     // end middleware
+
 export { findAll, findOne, add, update, remove, validateExists, sanitizeInput, sanitizePartialInput }
