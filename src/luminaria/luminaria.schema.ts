@@ -12,6 +12,15 @@ const ERR_TECNOLOGIA = `La tecnología debe ser una de ${Object.values(TECNOLOGI
 const ERR_FECHA = `La fecha debe estar entre ${FECHA_MIN} y ${FECHA_MAX}`
 const ERR_ID = `Es necesario un id`
 const ERR_POTENCIA = `La potencia debe ser mayor a ${POTENCIA_MIN}`
+const ERR_POTENCIA_MULTIPLE = `La potencia debe ser un múltiplo de 50`
+const MULTIPLO50 = (value: unknown): value is number => typeof value === 'number' && value % 50 === 0
+
+const POTENCIAMULTIPLE = v.pipe(
+    v.number(),
+    v.integer(),
+    v.minValue(POTENCIA_MIN, ERR_POTENCIA),
+    v.custom(MULTIPLO50, ERR_POTENCIA_MULTIPLE),
+)
 
 const id = v.pipe(
     v.number(ERR_ID),
@@ -33,6 +42,7 @@ const potencia = v.pipe(
     v.number(),
     v.integer(),
     v.minValue(POTENCIA_MIN, ERR_POTENCIA),
+    v.custom(MULTIPLO50, ERR_POTENCIA_MULTIPLE),
 )
 
 const fechaAdquisicion = v.pipe(
