@@ -39,9 +39,9 @@ async function add(req: Request, res: Response) {
 async function update(req: Request, res: Response) {
     try {
         const equipoAuxiliar = await em.findOneOrFail(EquipoAux, {id: res.locals.id})
-        em.assign(EquipoAux, res.locals.sanitizedPartialInput)
+        em.assign(equipoAuxiliar, res.locals.sanitizedPartialInput)
         await em.flush()
-        res.json({message: "Equipo Auxiliar actualizada", data: equipoAuxiliar})
+        res.json({message: "Equipo Auxiliar actualizado", data: equipoAuxiliar})
     } catch (err) {
         handleOrmError(res, err)
     }
@@ -76,9 +76,9 @@ async function sanitizeInput(req: Request, res: Response, next: NextFunction) {
     const incoming = await validarEquipoAuxiliar(req.body)
     if (!incoming.success)
         return res.status(400).json({message: incoming.issues[0].message})
-    const columnaNueva = incoming.output
+    const equipoAuxiliarNuevo = incoming.output
 
-    res.locals.sanitizedInput = columnaNueva
+    res.locals.sanitizedInput = equipoAuxiliarNuevo
 
     next()
 }
@@ -88,9 +88,9 @@ async function sanitizePartialInput(req: Request, res: Response, next: NextFunct
     
     if (!incoming.success)
         return res.status(400).json({message: incoming.issues[0].message})
-    const columnaNueva = incoming.output
+    const equipoAuxiliarNuevo = incoming.output
 
-    res.locals.sanitizedPartialInput = columnaNueva
+    res.locals.sanitizedPartialInput = equipoAuxiliarNuevo
 
     next()
 }

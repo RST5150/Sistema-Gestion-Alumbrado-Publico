@@ -49,6 +49,7 @@ export const equipoAuxiliarSchema = v.object({
     tipo: tipo,
     fechaAdquisicion: fechaAdquisicion,
     fechaInstalacion: v.optional(fechaInstalacion),
+    idServicio: v.optional(id),
 })
 
 export const equipoAuxiliarOpcional = v.partial(equipoAuxiliarSchema)
