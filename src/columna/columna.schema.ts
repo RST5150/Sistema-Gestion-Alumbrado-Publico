@@ -47,7 +47,7 @@ export const columnaSchema = v.object({
     fechaAdquisicion: fechaAdquisicion,
     fechaInstalacion: v.optional(fechaInstalacion),
     idServicio: v.optional(id),
-})
+ })
 
 export const columnaOpcional = v.partial(columnaSchema)
 
