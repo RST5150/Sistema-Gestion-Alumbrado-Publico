@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { Columna } from "./columna.entity.js";
-import { validateColumna, validateColumnaOpcional } from "./columna.schema.js";
+import { validarColumna, validarColumnaOpcional } from "./columna.schema.js";
 import { orm } from "../shared/db/orm.js";
 
 // Mensajes
@@ -73,7 +73,7 @@ function validateExists(req: Request, res: Response, next: NextFunction) {
 }
 
 async function sanitizeInput(req: Request, res: Response, next: NextFunction) {
-    const incoming = await validateColumna(req.body)
+    const incoming = await validarColumna(req.body)
     if (!incoming.success)
         return res.status(400).json({message: incoming.issues[0].message})
     const columnaNueva = incoming.output
@@ -92,7 +92,7 @@ async function sanitizeInput(req: Request, res: Response, next: NextFunction) {
 }
 
 async function sanitizePartialInput(req: Request, res: Response, next: NextFunction) {
-    const incoming = await validateColumnaOpcional(req.body)
+    const incoming = await validarColumnaOpcional(req.body)
     if (!incoming.success)
         return res.status(400).json({message: incoming.issues[0].message})
     const columnaParcial = incoming.output

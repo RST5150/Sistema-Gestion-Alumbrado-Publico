@@ -48,5 +48,5 @@ export const columnaSchema = v.object({
 
 export const columnaOpcional = v.partial(columnaSchema)
 
-export const validateColumna = v.safeParserAsync(columnaSchema)
-export const validateColumnaOpcional = v.safeParserAsync(columnaOpcional)
+export const validarColumna = v.safeParserAsync(columnaSchema)
+export const validarColumnaOpcional = v.safeParserAsync(columnaOpcional)
