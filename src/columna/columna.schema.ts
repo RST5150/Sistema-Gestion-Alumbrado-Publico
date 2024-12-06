@@ -46,10 +46,10 @@ export const columnaSchema = v.object({
     material: material,
     fechaAdquisicion: fechaAdquisicion,
     fechaInstalacion: v.optional(fechaInstalacion),
-    idServicio: v.optional(id),
- })
+    servicio: v.optional(v.array(id)),
+})
 
 export const columnaOpcional = v.partial(columnaSchema)
 
-export const validarColumna = v.safeParserAsync(columnaSchema)
-export const validarColumnaOpcional = v.safeParserAsync(columnaOpcional)
+export const validateColumna = v.safeParserAsync(columnaSchema)
+export const validateColumnaOpcional = v.safeParserAsync(columnaOpcional)

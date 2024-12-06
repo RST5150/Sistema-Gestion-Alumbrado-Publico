@@ -39,7 +39,7 @@ async function add(req: Request, res: Response) {
 async function update(req: Request, res: Response) {
     try {
         const columna = await em.findOneOrFail(Columna, {id: res.locals.id})
-        em.assign(columna, res.locals.sanitizedPartialInput)
+        em.assign(columna, res.locals.columnaParcial)
         await em.flush()
         res.json({message: "Columna actualizada", data: columna})
     } catch (err) {
@@ -85,16 +85,23 @@ async function sanitizeInput(req: Request, res: Response, next: NextFunction) {
 
 async function sanitizePartialInput(req: Request, res: Response, next: NextFunction) {
     const incoming = await validarColumnaOpcional(req.body)
-    
     if (!incoming.success)
         return res.status(400).json({message: incoming.issues[0].message})
-    const columnaNueva = incoming.output
+    const columnaParcial = incoming.output
 
-    res.locals.sanitizedPartialInput = columnaNueva
+    res.locals.columnaParcial = columnaParcial
+
+    const sanitizedInput = res.locals.columnaParcial
+
+    Object.keys(sanitizedInput).forEach((key) => {
+        if (sanitizedInput[key] === undefined) {
+            delete sanitizedInput[key];
+        }
+    });
 
     next()
-}
 
+}
     function handleOrmError(res: Response, err: any) {
         if (err.code) {
           switch (err.code) {
@@ -125,7 +132,5 @@ async function sanitizePartialInput(req: Request, res: Response, next: NextFunct
     function throw500(res: Response, err: any) {
        res.status(500).json({ message: ERR_500 })
      }
-
-     // end middleware
 
 export { findAll, findOne, add, update, remove, validateExists, sanitizeInput, sanitizePartialInput }
