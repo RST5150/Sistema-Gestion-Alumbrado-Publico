@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { Columna } from "./columna.entity.js";
-import { validateColumna } from "./columna.schema.js";
+import { validateColumna, validateColumnaOpcional } from "./columna.schema.js";
 import { orm } from "../shared/db/orm.js";
 
 // Mensajes
@@ -39,7 +39,7 @@ async function add(req: Request, res: Response) {
 async function update(req: Request, res: Response) {
     try {
         const columna = await em.findOneOrFail(Columna, {id: res.locals.id})
-        em.assign(columna, res.locals.sanitizedInput)
+        em.assign(columna, res.locals.columnaParcial)
         await em.flush()
         res.json({message: "Columna actualizada", data: columna})
     } catch (err) {
@@ -91,6 +91,25 @@ async function sanitizeInput(req: Request, res: Response, next: NextFunction) {
     next()
 }
 
+async function sanitizePartialInput(req: Request, res: Response, next: NextFunction) {
+    const incoming = await validateColumnaOpcional(req.body)
+    if (!incoming.success)
+        return res.status(400).json({message: incoming.issues[0].message})
+    const columnaParcial = incoming.output
+
+    res.locals.columnaParcial = columnaParcial
+
+    const sanitizedInput = res.locals.columnaParcial
+
+    Object.keys(sanitizedInput).forEach((key) => {
+        if (sanitizedInput[key] === undefined) {
+            delete sanitizedInput[key];
+        }
+    });
+
+    next()
+
+}
     function handleOrmError(res: Response, err: any) {
         if (err.code) {
           switch (err.code) {
@@ -122,4 +141,4 @@ async function sanitizeInput(req: Request, res: Response, next: NextFunction) {
        res.status(500).json({ message: ERR_500 })
      }
 
-export { findAll, findOne, add, update, remove, validateExists, sanitizeInput }
+export { findAll, findOne, add, update, remove, validateExists, sanitizeInput, sanitizePartialInput }
