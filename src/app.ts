@@ -4,6 +4,7 @@ import cors from 'cors'
 import { orm, syncSchema } from './shared/db/orm.js';
 import { RequestContext } from '@mikro-orm/core';
 import { columnaRouter } from './columna/columna.routes.js';
+import { luminariaRouter } from './luminaria/luminaria.routes.js';
 
 export const app = express()
 
@@ -18,6 +19,7 @@ app.use((req, res, next) => {
 
 
 app.use('/api/columnas', columnaRouter)
+app.use('/api/luminarias', luminariaRouter)
 
 await syncSchema()
 

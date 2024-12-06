@@ -3,7 +3,6 @@ import { Columna } from "./columna.entity.js";
 import { validarColumna, validarColumnaOpcional } from "./columna.schema.js";
 import { orm } from "../shared/db/orm.js";
 
-// Mensajes
 const ERR_500 = "Oops! Something went wrong. This is our fault."
 
 const em = orm.em
