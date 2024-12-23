@@ -3,8 +3,8 @@ Repo del proyecto del sistema de gestión de alumbrado público, TP final para A
 
 ## Integrantes
 * XXXXX - Alvarez, Thiago
-* XXXXX - Fernandez, Felipe
-* XXXXX - Romo, Matias
+* 47817 - Fernandez, Felipe
+* NO LO QUIERE DECIR - Romo, Matias
 * 44771 - Salvia, Ricardo
 
 ## Paso a Paso para levantar el proyecto (Back)
