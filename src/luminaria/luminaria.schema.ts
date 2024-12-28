@@ -41,7 +41,7 @@ const tecnologia = v.pipe(
 const potencia = v.pipe(
     v.number(),
     v.integer(),
-   // v.minValue(POTENCIA_MIN, ERR_POTENCIA),
+    v.minValue(POTENCIA_MIN, ERR_POTENCIA),
     //v.custom(MULTIPLO50, ERR_POTENCIA_MULTIPLE),
 )
 

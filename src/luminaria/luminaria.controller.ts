@@ -60,6 +60,15 @@ async function remove(req: Request, res: Response) {
 
 // middleware
 
+function convertToNumber(req: Request, res: Response, next: NextFunction) {
+    if (req.body.potencia) {
+        const potencia = parseInt(req.body.potencia)
+   
+        req.body.potencia = potencia
+    }
+    next()
+}
+
 function validateExists(req: Request, res: Response, next: NextFunction) {
     const id = parseInt(req.params.id);
 
@@ -95,11 +104,11 @@ async function sanitizePartialInput(req: Request, res: Response, next: NextFunct
     
     if (!incoming.success)
         return res.status(400).json({message: incoming.issues[0].message})
-    const columnaNueva = incoming.output
+    const luminariaParcial = incoming.output
 
-    res.locals.sanitizedPartialInput = columnaNueva
+    res.locals.luminariaParcial = luminariaParcial
 
-    const sanitizedInput = res.locals.columnaParcial
+    const sanitizedInput = res.locals.luminariaParcial
 
     Object.keys(sanitizedInput).forEach((key) => {
         if (sanitizedInput[key] === undefined) {
@@ -125,7 +134,7 @@ async function sanitizePartialInput(req: Request, res: Response, next: NextFunct
         else {
           switch (err.name) {
             case "NotFoundError":
-              res.status(404).json({message: `Columna no encontrada para ese ID ${res.locals.id}`})
+              res.status(404).json({message: `Luminaria no encontrada para ese ID ${res.locals.id}`})
               break
             default:
               console.error("\n--- ORM ERROR ---")
@@ -143,4 +152,4 @@ async function sanitizePartialInput(req: Request, res: Response, next: NextFunct
 
         // end middleware
 
-export { findAll, findOne, add, update, remove, validateExists, sanitizeInput, sanitizePartialInput}
+export { findAll, findOne, add, update, remove, validateExists, sanitizeInput, sanitizePartialInput, convertToNumber}
