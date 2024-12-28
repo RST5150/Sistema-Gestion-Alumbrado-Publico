@@ -6,6 +6,7 @@ import { RequestContext } from '@mikro-orm/core';
 import { columnaRouter } from './columna/columna.routes.js';
 import { luminariaRouter } from './luminaria/luminaria.routes.js';
 import { equipoAuxiliarRouter } from './equipoAuxiliar/equipoAuxiliar.routes.js';
+import { tareaMantenimientoRouter } from './tareaMantenimiento/tareaMantenimiento.routes.js';
 
 export const app = express()
 
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 app.use('/api/columnas', columnaRouter)
 app.use('/api/luminarias', luminariaRouter)
 app.use('/api/equiposAuxiliares', equipoAuxiliarRouter)
+app.use('/api/tareas', tareaMantenimientoRouter)
 
 await syncSchema()
 
