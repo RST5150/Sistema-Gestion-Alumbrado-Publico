@@ -3,7 +3,6 @@ import { EquipoAux } from "./equipoAuxiliar.entity.js";
 import { validarEquipoAuxiliar, validarEquipoAuxiliarOpcional } from "./equipoAuxiliar.schema.js";
 import { orm } from "../shared/db/orm.js";
 
-// Mensajes
 const ERR_500 = "Oops! Something went wrong. This is our fault."
 
 const em = orm.em
@@ -39,7 +38,7 @@ async function add(req: Request, res: Response) {
 async function update(req: Request, res: Response) {
     try {
         const equipoAuxiliar = await em.findOneOrFail(EquipoAux, {id: res.locals.id})
-        em.assign(equipoAuxiliar, res.locals.sanitizedPartialInput)
+        em.assign(equipoAuxiliar, res.locals.equipoAuxiliarParcial)
         await em.flush()
         res.json({message: "Equipo Auxiliar actualizado", data: equipoAuxiliar})
     } catch (err) {
@@ -78,19 +77,34 @@ async function sanitizeInput(req: Request, res: Response, next: NextFunction) {
         return res.status(400).json({message: incoming.issues[0].message})
     const equipoAuxiliarNuevo = incoming.output
 
-    res.locals.sanitizedInput = equipoAuxiliarNuevo
+    res.locals.equipoAuxiliarNuevo = equipoAuxiliarNuevo
+
+    const sanitizedInput = res.locals.equipoAuxiliarNuevo
+
+    Object.keys(sanitizedInput).forEach((key) => {
+        if (sanitizedInput[key] === undefined) {
+            delete sanitizedInput[key];
+        }
+    });
 
     next()
 }
 
 async function sanitizePartialInput(req: Request, res: Response, next: NextFunction) {
-    const incoming = await validarEquipoAuxiliarOpcional(req.body)
-    
+    const incoming = await validarEquipoAuxiliarOpcional(req.body)    
     if (!incoming.success)
         return res.status(400).json({message: incoming.issues[0].message})
-    const equipoAuxiliarNuevo = incoming.output
+    const equipoAuxiliarParcial = incoming.output
 
-    res.locals.sanitizedPartialInput = equipoAuxiliarNuevo
+    res.locals.equipoAuxiliarParcial = equipoAuxiliarParcial
+
+    const sanitizedInput = res.locals.equipoAuxiliarParcial
+
+    Object.keys(sanitizedInput).forEach((key) => {
+        if (sanitizedInput[key] === undefined) {
+            delete sanitizedInput[key];
+        }
+    });
 
     next()
 }
