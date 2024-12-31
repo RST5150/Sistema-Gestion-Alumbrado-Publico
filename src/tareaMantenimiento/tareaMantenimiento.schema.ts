@@ -5,18 +5,21 @@ const ERR_NOMBRE = `El nombre debe ser un string`
 const ERR_NIVEL = `El nivel debe ser un número entero`
 const ERR_FRECUENCIA = `La frecuencia de mantenimiento debe ser un número entero`
 
-
 const id = v.pipe(
     v.number(ERR_ID),
     v.integer(ERR_ID),
 )
 
 const nivel = v.pipe(
+    v.string(ERR_NIVEL),
+    v.transform((value) => parseInt(value)),
     v.number(ERR_NIVEL),
     v.integer(ERR_NIVEL),
 )
 
 const frecuenciaMantenimiento = v.pipe(
+    v.string(ERR_FRECUENCIA),
+    v.transform((value) => parseInt(value)),
     v.number(ERR_FRECUENCIA),
     v.integer(ERR_FRECUENCIA),
 )
@@ -32,3 +35,4 @@ export const tareaOpcional = v.partial(tareaMantenimientoSchema)
 
 export const validarTarea = v.safeParserAsync(tareaMantenimientoSchema)
 export const validarTareaOpcional = v.safeParserAsync(tareaOpcional)
+    

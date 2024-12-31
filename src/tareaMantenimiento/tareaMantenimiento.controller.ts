@@ -61,8 +61,6 @@ async function remove(req: Request, res: Response) {
 
 //middleware
 
-//function convertToNumber(req: Request, res: Response, next: NextFunction) {
-
 
 function validateExists(req: Request, res: Response, next: NextFunction) {
     const id = parseInt(req.params.id);

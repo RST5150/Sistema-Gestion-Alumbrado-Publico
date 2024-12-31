@@ -13,6 +13,6 @@ export class Tarea extends Base {
     @Property({nullable: false, type: 'integer'})
     frecuenciaMantenimiento!: Number;
 
-    @ManyToOne(() => Mantenimiento, { nullable: false })
+    @ManyToOne(() => Mantenimiento, { nullable: true })
     mantenimiento!: Rel<Mantenimiento>;
 }
