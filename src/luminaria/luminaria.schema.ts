@@ -39,6 +39,8 @@ const tecnologia = v.pipe(
 )
 
 const potencia = v.pipe(
+    v.string(),
+    v.transform((value) => parseInt(value)),
     v.number(),
     v.integer(),
     v.minValue(POTENCIA_MIN, ERR_POTENCIA),

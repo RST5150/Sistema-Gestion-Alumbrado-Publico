@@ -60,15 +60,6 @@ async function remove(req: Request, res: Response) {
 
 // middleware
 
-function convertToNumber(req: Request, res: Response, next: NextFunction) {
-    if (req.body.potencia) {
-        const potencia = parseInt(req.body.potencia)
-   
-        req.body.potencia = potencia
-    }
-    next()
-}
-
 function validateExists(req: Request, res: Response, next: NextFunction) {
     const id = parseInt(req.params.id);
 
@@ -152,4 +143,4 @@ async function sanitizePartialInput(req: Request, res: Response, next: NextFunct
 
         // end middleware
 
-export { findAll, findOne, add, update, remove, validateExists, sanitizeInput, sanitizePartialInput, convertToNumber}
+export { findAll, findOne, add, update, remove, validateExists, sanitizeInput, sanitizePartialInput}
