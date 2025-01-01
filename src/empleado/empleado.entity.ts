@@ -22,10 +22,18 @@ export class Empleado extends Base {
     @Property({nullable: false})
     fechaIngreso!: Date;
 
+    @Property({nullable: false})
+    rol!: string;
+
     @OneToMany(() => Mantenimiento, (mantenimiento) => mantenimiento.empleado, {
     cascade: [Cascade.ALL],
 })
     mantenimientos = new Collection<Mantenimiento>(this);
 }
 
+export enum Rol {
+    Director = 'Director',
+    Administrativo = 'Administrativo',
+    Empleado = 'Empleado',
+}
 
