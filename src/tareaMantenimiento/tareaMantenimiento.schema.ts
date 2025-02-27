@@ -12,8 +12,8 @@ const id = v.pipe(
 
 const nivel = v.pipe(
     v.string(ERR_NIVEL),
-    v.transform((value) => parseInt(value)),
-    v.number(ERR_NIVEL),
+    v.transform((value) => parseInt(value)),        //transforma el string a un número
+    v.number(ERR_NIVEL),                           //SIEMPRE vamos a pasar strings, si explota, es esta parte
     v.integer(ERR_NIVEL),
 )
 

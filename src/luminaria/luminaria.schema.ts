@@ -40,11 +40,11 @@ const tecnologia = v.pipe(
 
 const potencia = v.pipe(
     v.string(),
-    v.transform((value) => parseInt(value)),
-    v.number(),
+    v.transform((value) => parseInt(value)),           //transforma el string a un número
+    v.number(),                                        //SIEMPRE vamos a pasar strings, si explota, es esta parte     
     v.integer(),
     v.minValue(POTENCIA_MIN, ERR_POTENCIA),
-    //v.custom(MULTIPLO50, ERR_POTENCIA_MULTIPLE),
+    //v.custom(MULTIPLO50, ERR_POTENCIA_MULTIPLE),      //Me dio terrible paja pensarlo más, capaz lo soluciono después, o lo dejo así, total no es tan importante
 )
 
 const fechaAdquisicion = v.pipe(

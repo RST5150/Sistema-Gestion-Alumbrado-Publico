@@ -13,7 +13,7 @@ export class Empleado extends Base {
     @Property({nullable: false})
     nombre!: string;
 
-    @Property({nullable: true})
+    @Property({nullable: false})
     email!: string;
 
     @Property({nullable: true})

@@ -8,6 +8,7 @@ import { luminariaRouter } from './luminaria/luminaria.routes.js';
 import { equipoAuxiliarRouter } from './equipoAuxiliar/equipoAuxiliar.routes.js';
 import { tareaMantenimientoRouter } from './tareaMantenimiento/tareaMantenimiento.routes.js';
 import { empleadoRouter } from './empleado/empleado.routes.js';
+import { servicioLuzRouter } from './servicioLuz/servicioLuz.routes.js';
 
 export const app = express()
 
@@ -26,6 +27,7 @@ app.use('/api/luminarias', luminariaRouter)
 app.use('/api/equiposAuxiliares', equipoAuxiliarRouter)
 app.use('/api/tareas', tareaMantenimientoRouter)
 app.use('/api/empleados', empleadoRouter)
+app.use('/api/serviciosLuz', servicioLuzRouter)
 
 await syncSchema()
 
