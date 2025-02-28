@@ -23,8 +23,8 @@ export class Luminaria extends Base {
     @Property({nullable: true})
     fechaInstalacion!: Date;
 
-    @ManyToMany(() => ServicioLuz, (servicioLuz) => servicioLuz.luminarias)
-    serviciosLuz = new Collection<ServicioLuz>(this);
+    @ManyToOne(() => ServicioLuz, {nullable: true})
+    serviciosLuz!: ServicioLuz;
 
     @ManyToOne(() => Mantenimiento, { nullable: true })
     mantenimiento!: Rel<Mantenimiento>;
