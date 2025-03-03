@@ -27,7 +27,7 @@ export class Mantenimiento extends Base {
     falla!: String;
 
     @ManyToOne(() => ServicioLuz, { nullable: true })
-    servicio!: Rel<ServicioLuz>;  // El Rel<> soluciona el problema de dependecia circular, eso dice la documentacion de mikroOrm
+    servicioLuz!: Rel<ServicioLuz>;  // El Rel<> soluciona el problema de dependecia circular, eso dice la documentacion de mikroOrm
 
     @OneToMany(() => Tarea, (tarea) => tarea.mantenimiento, {
         cascade: [Cascade.ALL],
@@ -62,4 +62,5 @@ export enum Falla {
     Luminaria = 'Luminaria',
     EquipoAuxiliar = 'Equipo Auxiliar',
     Ambos = 'Ambos',
+    Otro = 'Otro',
 }

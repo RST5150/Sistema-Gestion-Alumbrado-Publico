@@ -13,10 +13,10 @@ export class ServicioLuz extends Base {
     @Property({nullable: false})
     fechaInstalacion!: Date;
 
-    @OneToMany('Luminaria', 'Servicio', {lazy: true})
+    @OneToMany(() => Luminaria, luminaria => luminaria.serviciosLuz, {lazy: true})
     luminarias = new Collection<Luminaria>(this);
 
-    @OneToMany('EquipoAux', 'Servicio', {lazy: true})
+    @OneToMany(() => EquipoAux, equipoAux => equipoAux.serviciosLuz, {lazy: true})
     equipoAuxiliar = new Collection<EquipoAux>(this);
 
     @OneToOne(() => Columna, (columna) => columna.servicio, {
@@ -26,7 +26,7 @@ export class ServicioLuz extends Base {
     })
     columna!: Rel<Columna>;
 
-    @OneToMany('Mantenimiento', 'Servicio', {lazy: true})
+    @OneToMany(() => Mantenimiento, mantenimiento => mantenimiento.servicioLuz, {lazy: true})
     mantenimientos = new Collection<Mantenimiento>(this);
 
     @ManyToOne(() => Empleado, { nullable: false }) 

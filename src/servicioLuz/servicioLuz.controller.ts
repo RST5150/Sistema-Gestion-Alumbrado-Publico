@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
-import { ServicioLuz } from './servicioLuz.entity'
+import { ServicioLuz } from './servicioLuz.entity.js'
 import { validarServicioLuz, validarServicioLuzOpcional } from './servicioLuz.schema.js'
 import { orm } from '../shared/db/orm.js'
-import { populate } from 'dotenv'
 
 const ERR_500 = "Oops! Something went wrong. This is our fault."
 
@@ -10,7 +9,7 @@ const em = orm.em
 
 async function findAll(req: Request, res: Response) {
     try {
-        const serviciosLuz = await em.find(ServicioLuz, {}, {populate: ['luminarias', 'equiposAux', 'columna', 'mantenimientos']})
+        const serviciosLuz = await em.find(ServicioLuz, {}, {populate: ['luminarias', 'equipoAuxiliar', 'columna', 'mantenimientos']})
         res.json({data: serviciosLuz})
     } catch (err) {
         handleOrmError(res, err)
@@ -19,7 +18,7 @@ async function findAll(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
     try {
-        const servicioLuz = await em.findOneOrFail(ServicioLuz, {id: res.locals.id}, {populate: ['luminarias', 'equiposAux', 'columna', 'mantenimientos']})
+        const servicioLuz = await em.findOneOrFail(ServicioLuz, {id: res.locals.id}, {populate: ['luminarias', 'equipoAuxiliar', 'columna', 'mantenimientos']})
         res.json({data: servicioLuz})
     } catch (err) {
         handleOrmError(res, err)
