@@ -26,12 +26,10 @@ export class Empleado extends Base {
     @Property({nullable: false})
     rol!: string;
 
-    @OneToMany(() => Mantenimiento, (mantenimiento) => mantenimiento.empleado, {
-    cascade: [Cascade.ALL],
-})
+    @OneToMany(() => Mantenimiento, (mantenimiento) => mantenimiento.empleado, {lazy: true})
     mantenimientos = new Collection<Mantenimiento>(this);
 
-    @OneToMany('', 'empleado', {lazy: true})
+    @OneToMany(() => ServicioLuz, servicioLuz => servicioLuz.empleado, {lazy: true})
     serviciosLuz = new Collection<ServicioLuz>(this);
 
 
