@@ -4,16 +4,22 @@ import { Base } from "../shared/db/base.entity.js";
 @Entity()
 export class Ubicacion extends Base {
     @Property({nullable: false, unique: true})
-    calle!: String;    
+    calle!: string;    
     
     @Property({nullable: false})
-    altura!: Number;
+    altura!: number;
+
+    @Property({nullable: true})
+    bis!: boolean;
 
     @Property({nullable: false})
-    bis!: Boolean;
+    latitud!: number;
 
     @Property({nullable: false})
-    distrito!: String;              //capaz podriamos implementar coordenadas con la API de maps, capaz no es taaaan dificil
+    longitud!: number;
+
+    @Property({nullable: false})
+    distrito!: string;              //capaz podriamos implementar coordenadas con la API de maps, capaz no es taaaan dificil
                                     // o con la API de la muni, creo que está disponible
 }
 

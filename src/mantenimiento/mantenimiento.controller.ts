@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
-import { Mantenimiento } from './mantenimiento.entity'
+import { Mantenimiento } from './mantenimiento.entity.js'
 import { validarMantenimiento, validarMantenimientoOpcional } from './mantenimiento.schema.js'
 import { orm } from '../shared/db/orm.js'
 
@@ -9,7 +9,7 @@ const em = orm.em
 
 async function findAll(req: Request, res: Response) {
     try {
-        const mantenimientos = await em.find(Mantenimiento, {}, {populate: ['tareas', 'luminarias', 'equiposAux', 'servicio', 'empleado']})
+        const mantenimientos = await em.find(Mantenimiento, {}, {populate: ['tareas', 'luminarias', 'equiposAux', 'servicioLuz', 'empleado']})
         res.json({data: mantenimientos})
     } catch (err) {
         handleOrmError(res, err)
@@ -18,7 +18,7 @@ async function findAll(req: Request, res: Response) {
 
 async function findOne(req: Request, res: Response) {
     try {
-        const mantenimiento = await em.findOneOrFail(Mantenimiento, {id: res.locals.id}, {populate: ['tareas', 'luminarias', 'equiposAux', 'servicio', 'empleado']})
+        const mantenimiento = await em.findOneOrFail(Mantenimiento, {id: res.locals.id}, {populate: ['tareas', 'luminarias', 'equiposAux', 'servicioLuz', 'empleado']})
         res.json({data: mantenimiento})
     } catch (err) {
         handleOrmError(res, err)

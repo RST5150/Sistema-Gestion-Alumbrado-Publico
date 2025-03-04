@@ -5,13 +5,13 @@ import { Mantenimiento } from "../mantenimiento/mantenimiento.entity.js";
 @Entity()
 export class Tarea extends Base {
     @Property({nullable: false, unique: true})
-    nombre!: String;    
+    nombre!: string;    
     
     @Property({nullable: false})
-    nivel!: Number;
+    nivel!: number;
 
     @Property({nullable: false, type: 'integer'})
-    frecuenciaMantenimiento!: Number;
+    frecuenciaMantenimiento!: number;
 
     @ManyToOne(() => Mantenimiento, { nullable: true })
     mantenimiento!: Rel<Mantenimiento>;

@@ -5,10 +5,10 @@ import { ServicioLuz } from "../servicioLuz/servicioLuz.entity.js";
 @Entity()
 export class Columna extends Base {
     @Property({nullable: false, unique: true})
-    nroSerie!: String;    
+    nroSerie!: string;    
     
     @Property({nullable: false})
-    material!: String;
+    material!: string;
 
     @Property({nullable: false})
     fechaAdquisicion!: Date;

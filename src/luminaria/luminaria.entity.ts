@@ -6,16 +6,16 @@ import { Mantenimiento } from "../mantenimiento/mantenimiento.entity.js";
 @Entity()
 export class Luminaria extends Base {
     @Property({nullable: false, unique: true})
-    nroSerie!: String;    
+    nroSerie!: string;    
 
     @Property({nullable: false})
-    marca!: String;
+    marca!: string;
 
     @Property({nullable: false})
-    tecnologia!: String;
+    tecnologia!: string;
 
     @Property({nullable: false})
-    potencia!: Number;
+    potencia!: number;
 
     @Property({nullable: false})
     fechaAdquisicion!: Date;

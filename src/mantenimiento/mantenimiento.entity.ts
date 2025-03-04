@@ -12,19 +12,19 @@ export class Mantenimiento extends Base {
     fechaAlta!: Date;
 
     @Property({nullable: false})
-    estado!: String;
+    estado!: string;
 
     @Property({nullable: false})
-    tipo!: String;
+    tipo!: string;
 
     @Property({nullable: true})
     fechaRealizacion!: Date;
 
     @Property({nullable: false, type: 'float'})
-    valorPAT!: Number;
+    valorPAT!: number;
 
     @Property({nullable: true})
-    falla!: String;
+    falla!: string;
 
     @ManyToOne(() => ServicioLuz, { nullable: true })
     servicioLuz!: Rel<ServicioLuz>;  // El Rel<> soluciona el problema de dependecia circular, eso dice la documentacion de mikroOrm

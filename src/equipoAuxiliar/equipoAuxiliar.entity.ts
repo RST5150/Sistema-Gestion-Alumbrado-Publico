@@ -6,13 +6,13 @@ import { Mantenimiento } from "../mantenimiento/mantenimiento.entity.js";
 @Entity()
 export class EquipoAux extends Base {
     @Property({nullable: false, unique: true})
-    nroSerie!: String;    
+    nroSerie!: string;    
     
     @Property({nullable: false})
-    marca!: String;
+    marca!: string;
 
     @Property({nullable: false})
-    tipo!: String;
+    tipo!: string;
 
     @Property({nullable: false})
     fechaAdquisicion!: Date;
