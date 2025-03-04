@@ -9,6 +9,7 @@ import { equipoAuxiliarRouter } from './equipoAuxiliar/equipoAuxiliar.routes.js'
 import { tareaMantenimientoRouter } from './tareaMantenimiento/tareaMantenimiento.routes.js';
 import { empleadoRouter } from './empleado/empleado.routes.js';
 import { servicioLuzRouter } from './servicioLuz/servicioLuz.routes.js';
+import { mantenimientoRouter } from './mantenimiento/mantenimiento.routes.js';
 
 export const app = express()
 
@@ -28,7 +29,7 @@ app.use('/api/equiposAuxiliares', equipoAuxiliarRouter)
 app.use('/api/tareas', tareaMantenimientoRouter)
 app.use('/api/empleados', empleadoRouter)
 app.use('/api/serviciosLuz', servicioLuzRouter)
-
+app.use('/api/mantenimientos', mantenimientoRouter)
 await syncSchema()
 
 app.use((_, res) => {
