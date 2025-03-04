@@ -5,8 +5,6 @@ import { EquipoAux } from "../equipoAuxiliar/equipoAuxiliar.entity.js";
 import { Columna } from "../columna/columna.entity.js";
 import { Mantenimiento } from "../mantenimiento/mantenimiento.entity.js";
 import { Empleado } from "../empleado/empleado.entity.js";
-import { nullable } from "valibot";
-
 
 @Entity()
 export class ServicioLuz extends Base {

@@ -9,7 +9,6 @@ const ERR_ID_EQUIPO_AUX = `Es necesario al menos un id de equipo auxiliar`
 const ERR_ID_EQUIPO_AUX_MAX = `No se pueden instalar más de 5 equipos auxiliares`
 const ERR_ID_COLUMNAS = `Es necesario un id de columna`
 const ERR_FECHA = `La fecha debe ser una fecha válida`
-const ERR_FECHA_FUTURA = `La fecha debe ser una fecha pasada u hoy`
 
 const id = v.pipe(
     v.number(ERR_ID),

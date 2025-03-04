@@ -1,6 +1,7 @@
 import { Entity, Property, OneToMany, Collection, Cascade } from "@mikro-orm/core";
 import { Base } from "../shared/db/base.entity.js";
 import { Mantenimiento } from "../mantenimiento/mantenimiento.entity.js";
+import { ServicioLuz } from "../servicioLuz/servicioLuz.entity.js";
 
 @Entity()
 export class Empleado extends Base {
@@ -29,6 +30,11 @@ export class Empleado extends Base {
     cascade: [Cascade.ALL],
 })
     mantenimientos = new Collection<Mantenimiento>(this);
+
+    @OneToMany('', 'empleado', {lazy: true})
+    serviciosLuz = new Collection<ServicioLuz>(this);
+
+
 }
 
 export enum Rol {
