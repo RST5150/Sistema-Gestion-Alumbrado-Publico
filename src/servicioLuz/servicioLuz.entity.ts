@@ -27,7 +27,7 @@ export class ServicioLuz extends Base {
     @OneToMany(() => Mantenimiento, mantenimiento => mantenimiento.servicioLuz, {lazy: true})
     mantenimientos = new Collection<Mantenimiento>(this);
 
-    @ManyToOne(() => Empleado, { nullable: false }) 
-    empleado!: Rel<Empleado>;
+    // @ManyToOne(() => Empleado, { nullable: false }) 
+    // empleado!: Rel<Empleado>;
 
 }

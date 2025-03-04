@@ -38,7 +38,6 @@ const columna = v.pipe(
 )
 
 export const servicioLuzSchema = v.object({
-    id: id,
     fechaInstalacion: fechaInstalacion,
     Luminaria: luminaria,
     EquipoAux: equipoAux,
