@@ -1,11 +1,13 @@
 import * as v from 'valibot'
 import { Distrito } from './ubicacion.entity.js'
 
-const ERR_ID = `Es necesario un id 32`
+const ERR_ID = `Es necesario un id`
 const ERR_ID_CALLE = `Es necesario un nombre de calle`
 const ERR_ID_ALTURA = `Es necesario una altura`
-const ERR_ID_LATITUD = `Es necesario una latitud válida`
-const ERR_ID_LONGITUD = `Es necesario una longitud válida`
+const ERR_LAT_MIN = 'La latitud debe ser mayor a -90'
+const ERR_LAT_MAX = 'La latitud debe ser menor a 90'
+const ERR_LON_MIN = 'La longitud debe ser menor a -180'
+const ERR_LON_MAX = 'La longitud debe ser mayor a 180'
 const Dis = Distrito
 const ERR_ID_DISTRITO = `Es necesario un distrito`
 
@@ -26,15 +28,17 @@ const altura = v.pipe(
 )
     
 const latitud = v.pipe(
-    v.number(ERR_ID_LATITUD),
-    v.minValue(-90, ERR_ID_LATITUD),
-    v.maxValue(90, ERR_ID_LATITUD),
+    v.string('Por acá no deberia pasar'),
+    v.transform((value) => parseFloat(value)),
+    v.minValue(-90, ERR_LAT_MIN),
+    v.maxValue(90, ERR_LAT_MAX),
 )
 
 const longitud = v.pipe(
-    v.number(ERR_ID_LONGITUD),
-    v.minValue(-180, ERR_ID_LONGITUD),
-    v.maxValue(180, ERR_ID_LONGITUD),
+    v.string('Por acá no deberia pasar'),
+    v.transform((value) => parseFloat(value)),
+    v.minValue(-180, ERR_LON_MIN),
+    v.maxValue(180, ERR_LON_MAX),
 )
 
 const distrito = v.pipe(
@@ -43,7 +47,6 @@ const distrito = v.pipe(
 )
 
 export const ubicacionSchema = v.object({
-    id: id,
     calle: calle,
     altura: altura,
     bis: v.optional(v.boolean()),

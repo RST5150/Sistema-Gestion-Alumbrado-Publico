@@ -9,8 +9,8 @@ const em = orm.em
 
 async function findAll(req: Request, res: Response) {
     try {
-        const ubicaciones = await em.find(Ubicacion, {})
-        res.json({data: ubicaciones})
+        const ubicacion = await em.find(Ubicacion, {})
+        res.json({data: ubicacion})
     } catch (err) {
         handleOrmError(res, err)
     }
@@ -68,7 +68,7 @@ function validateExists(req: Request, res: Response, next: NextFunction) {
     
     res.locals.id = id
 
-    next()
+    next();
 }
 
 async function sanitizeInput(req: Request, res: Response, next: NextFunction) {

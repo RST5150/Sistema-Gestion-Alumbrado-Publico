@@ -3,7 +3,7 @@ import { Base } from "../shared/db/base.entity.js";
 
 @Entity()
 export class Ubicacion extends Base {
-    @Property({nullable: false, unique: true})
+    @Property({nullable: false})
     calle!: string;    
     
     @Property({nullable: false})
@@ -13,10 +13,10 @@ export class Ubicacion extends Base {
     bis!: boolean;
 
     @Property({nullable: false})
-    latitud!: number;
+    latitud!: string;
 
     @Property({nullable: false})
-    longitud!: number;
+    longitud!: string;
 
     @Property({nullable: false})
     distrito!: string;              //capaz podriamos implementar coordenadas con la API de maps, capaz no es taaaan dificil
