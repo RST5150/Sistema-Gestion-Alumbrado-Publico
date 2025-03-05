@@ -7,7 +7,7 @@ export class Ubicacion extends Base {
     calle!: string;    
     
     @Property({nullable: false})
-    altura!: number;
+    altura!: string;
 
     @Property({nullable: true})
     bis!: boolean;

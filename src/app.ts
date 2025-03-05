@@ -10,6 +10,7 @@ import { tareaMantenimientoRouter } from './tareaMantenimiento/tareaMantenimient
 import { empleadoRouter } from './empleado/empleado.routes.js';
 import { servicioLuzRouter } from './servicioLuz/servicioLuz.routes.js';
 import { mantenimientoRouter } from './mantenimiento/mantenimiento.routes.js';
+import { ubicacionRouter } from './ubicacion/ubicacion.routes.js';
 
 export const app = express()
 
@@ -30,6 +31,7 @@ app.use('/api/tareas', tareaMantenimientoRouter)
 app.use('/api/empleados', empleadoRouter)
 app.use('/api/serviciosLuz', servicioLuzRouter)
 app.use('/api/mantenimientos', mantenimientoRouter)
+app.use('/api/ubicaciones', ubicacionRouter)
 await syncSchema()
 
 app.use((_, res) => {

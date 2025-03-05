@@ -29,7 +29,7 @@ async function add(req: Request, res: Response){
     try {
         const mantenimiento = await em.create(Mantenimiento, res.locals.mantenimientoNuevo)
         await em.flush()
-        res.status(201).json({message: "Mantenimiento creaado", data: mantenimiento})
+        res.status(201).json({message: "Mantenimiento creado", data: mantenimiento})
     } catch (err) {
         handleOrmError(res, err)
     }
