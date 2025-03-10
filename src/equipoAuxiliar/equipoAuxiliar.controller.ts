@@ -10,7 +10,7 @@ const em = orm.em
 async function findAll(req: Request, res: Response) {
     try {
         const equipoAuxiliar = await em.find(EquipoAux, {})
-        res.json({date: equipoAuxiliar})
+        res.json({data: equipoAuxiliar})
     } catch (err) {
         handleOrmError(res, err)
     }
