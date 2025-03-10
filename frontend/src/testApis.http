@@ -1,0 +1,55 @@
+// COLUMNAS
+GET http://localhost:3000/api/columnas
+
+POST http://localhost:3000/api/columnas HTTP/1.1
+content-type: application/json
+
+{
+    "nroSerie": "abcd123458",
+    "material": "Hormigon",
+    "fechaAdquisicion": "2023-03-09",
+    "fechaInstalacion": "2025-03-02"
+}
+
+// LUMINARIAS
+GET http://localhost:3000/api/luminarias
+
+POST http://localhost:3000/api/luminarias HTTP/1.1
+content-type: application/json
+
+{
+    "nroSerie": "abcd123461",
+    "marca": "Philips",
+	"tecnologia": "LED",
+	"potencia": "350",
+    "fechaAdquisicion": "2023-03-09",
+    "fechaInstalacion": "2025-02-19"
+}
+
+// EQUIPOS AUXILIARES
+GET http://localhost:3000/api/equiposAuxiliares
+
+POST http://localhost:3000/api/equiposAuxiliares HTTP/1.1
+content-type: application/json
+
+{
+    "nroSerie": "abcd123504",
+    "marca": "Osram",
+	"tipo": "Driver",
+    "fechaAdquisicion": "2023-03-09",
+    "fechaInstalacion": "2025-02-05"
+}
+
+// SERVICIOS
+GET http://localhost:3000/api/serviciosLuz
+
+POST http://localhost:3000/api/serviciosLuz HTTP/1.1
+content-type: application/json
+
+{
+    "nroSerie": "abcd123462",
+    "luminarias": ["abcd123461", "abcd123460"],
+    "equipoAuxiliar": ["abcd123504", "abcd123503"],
+    "columna": "abcd123461",
+    "fechaInstalacion": "2025-03-10"
+}
