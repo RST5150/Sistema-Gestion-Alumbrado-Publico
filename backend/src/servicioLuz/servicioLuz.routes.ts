@@ -3,6 +3,8 @@ import {findAll, findOne, add, update, remove, sanitizeInput, validateExists, sa
 
 export const servicioLuzRouter = Router();
 
+
+
 servicioLuzRouter.get("/", findAll);
 servicioLuzRouter.post("/", sanitizeInput, add);
 
@@ -10,3 +12,4 @@ servicioLuzRouter.get("/:id", validateExists, findOne);
 servicioLuzRouter.put("/:id", validateExists, sanitizeInput, update);
 servicioLuzRouter.patch("/:id", validateExists, sanitizePartialInput, update);
 servicioLuzRouter.delete("/:id", validateExists, remove);
+

@@ -36,3 +36,8 @@ await syncSchema();
 app.use((_, res) => {
   return res.status(404).json({ message: "Resource not found" });
 });
+
+app.post("/ruta", (req, res) => {
+  console.log("Body recibido:", req.body); // Verificar el body
+  res.status(200).json({ message: "Recibido" });
+});

@@ -21,13 +21,13 @@ const fechaInstalacion = v.pipe(
 )
 
 const luminaria = v.pipe(
-    v.array(id),
+    v.array(v.number('gei')),
     v.minLength(1, ERR_ID_LUMINARIA),
     v.maxLength(5, ERR_ID_LUMINARIA_MAX),
 )
 
 const equipoAux = v.pipe(
-    v.array(id),
+    v.array(v.number('gei')),
     v.minLength(1, ERR_ID_EQUIPO_AUX),
     v.maxLength(5, ERR_ID_EQUIPO_AUX_MAX),
 )
@@ -39,11 +39,11 @@ const columna = v.pipe(
 
 export const servicioLuzSchema = v.object({
     fechaInstalacion: fechaInstalacion,
-    Luminaria: luminaria,
-    EquipoAux: equipoAux,
-    Columna: v.optional(columna),
-    Mantenimiento: v.optional(v.array(id)),   //chan
-})
+    luminarias: luminaria,   // Ahora coincide con req.body
+    equipoAuxiliar: equipoAux,
+    columna: v.optional(columna),
+    mantenimiento: v.optional(v.array(id)),   // Si envías mantenimientos
+});
 
 export const servicioLuzOpcional = v.partial(servicioLuzSchema)
 

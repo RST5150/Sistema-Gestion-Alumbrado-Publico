@@ -38,6 +38,9 @@ importers:
       sanitize-html:
         specifier: ^2.13.0
         version: 2.13.1
+      sistema-gestion-alumbrado-publico:
+        specifier: 'file:'
+        version: 'file:'
       valibot:
         specifier: ^0.36.0
         version: 0.36.0
@@ -1440,6 +1443,9 @@ packages:
   signal-exit@4.1.0:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
+
+  'sistema-gestion-alumbrado-publico@file:':
+    resolution: {directory: '', type: directory}
 
   slash@3.0.0:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
@@ -2965,6 +2971,39 @@ snapshots:
   signal-exit@3.0.7: {}
 
   signal-exit@4.1.0: {}
+
+  'sistema-gestion-alumbrado-publico@file:':
+    dependencies:
+      '@mikro-orm/core': 5.8.10(@mikro-orm/mysql@5.8.10)
+      '@mikro-orm/mysql': 5.8.10(@mikro-orm/core@5.8.10)
+      '@mikro-orm/sql-highlighter': 1.0.1
+      bcrypt: 5.1.1
+      cors: 2.8.5
+      dotenv: 16.4.5
+      express: 4.21.1
+      jsonwebtoken: 9.0.2
+      reflect-metadata: 0.2.2
+      sanitize-html: 2.13.1
+      valibot: 0.36.0
+    transitivePeerDependencies:
+      - '@mikro-orm/better-sqlite'
+      - '@mikro-orm/entity-generator'
+      - '@mikro-orm/mariadb'
+      - '@mikro-orm/migrations'
+      - '@mikro-orm/migrations-mongodb'
+      - '@mikro-orm/mongodb'
+      - '@mikro-orm/postgresql'
+      - '@mikro-orm/seeder'
+      - '@mikro-orm/sqlite'
+      - better-sqlite3
+      - encoding
+      - mssql
+      - mysql
+      - pg
+      - pg-native
+      - sqlite3
+      - supports-color
+      - tedious
 
   slash@3.0.0: {}
 

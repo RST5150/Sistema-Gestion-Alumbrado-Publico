@@ -73,13 +73,18 @@ function validateExists(req: Request, res: Response, next: NextFunction) {
 
 async function sanitizeInput(req: Request, res: Response, next: NextFunction) {
     const incoming = await validarServicioLuz(req.body)
-    if (!incoming.success)
-        return res.status(400).json({message: incoming.issues[0].message})
+    if (!incoming.success){
+        console.log("Body recibido:", req.body)
+        return res.status(400).json({message: incoming.issues[0].message})}
     const servicioLuzNuevo = incoming.output
 
     res.locals.servicioLuzNuevo = servicioLuzNuevo
 
     const sanitizedInput = res.locals.servicioLuzNuevo
+
+    console.log("Body recibido:", req.body)
+    console.log("Body sanitizado:", sanitizedInput);
+
 
     Object.keys(sanitizedInput).forEach(key => {
         if (sanitizedInput[key] === undefined){
