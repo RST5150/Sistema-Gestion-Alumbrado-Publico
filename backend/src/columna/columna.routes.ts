@@ -1,5 +1,15 @@
 import { Request, Response, NextFunction, Router } from "express";
-import { findAll, findOne, add, update, remove, sanitizeInput, validateExists, sanitizePartialInput } from "./columna.controller.js"; 
+import {
+  findAll,
+  findOne,
+  add,
+  update,
+  remove,
+  sanitizeInput,
+  validateExists,
+  sanitizePartialInput,
+  findManyByIds,
+} from "./columna.controller.js";
 
 export const columnaRouter = Router();
 
@@ -10,3 +20,6 @@ columnaRouter.get("/:id", validateExists, findOne);
 columnaRouter.put("/:id", validateExists, sanitizeInput, update);
 columnaRouter.patch("/:id", validateExists, sanitizePartialInput, update);
 columnaRouter.delete("/:id", validateExists, remove);
+columnaRouter.post("/findMany", findManyByIds);
+
+export default columnaRouter;
