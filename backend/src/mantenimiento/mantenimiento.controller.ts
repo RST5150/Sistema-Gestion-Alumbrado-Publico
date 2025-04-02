@@ -1,142 +1,195 @@
-import { Request, Response, NextFunction } from 'express'
-import { Mantenimiento } from './mantenimiento.entity.js'
-import { validarMantenimiento, validarMantenimientoOpcional } from './mantenimiento.schema.js'
-import { orm } from '../shared/db/orm.js'
+import { Request, Response, NextFunction } from "express";
+import { Mantenimiento } from "./mantenimiento.entity.js";
+import {
+  validarMantenimiento,
+  validarMantenimientoOpcional,
+} from "./mantenimiento.schema.js";
+import { orm } from "../shared/db/orm.js";
 
-const ERR_500 = "Oops! Something went wrong. This is our fault."
+const ERR_500 = "Oops! Something went wrong. This is our fault.";
 
-const em = orm.em
+const em = orm.em;
 
 async function findAll(req: Request, res: Response) {
-    try {
-        const mantenimientos = await em.find(Mantenimiento, {}, {populate: ['tareas', 'luminarias', 'equiposAux', 'servicioLuz', 'empleado']})
-        res.json({data: mantenimientos})
-    } catch (err) {
-        handleOrmError(res, err)
-    }
+  try {
+    const mantenimientos = await em.find(
+      Mantenimiento,
+      {},
+      {
+        populate: [
+          "tareas",
+          "luminarias",
+          "equiposAux",
+          "servicioLuz",
+          "empleado",
+        ],
+      }
+    );
+    res.json({ data: mantenimientos });
+  } catch (err) {
+    handleOrmError(res, err);
+  }
 }
 
 async function findOne(req: Request, res: Response) {
-    try {
-        const mantenimiento = await em.findOneOrFail(Mantenimiento, {id: res.locals.id}, {populate: ['tareas', 'luminarias', 'equiposAux', 'servicioLuz', 'empleado']})
-        res.json({data: mantenimiento})
-    } catch (err) {
-        handleOrmError(res, err)
-    }
+  try {
+    const mantenimiento = await em.findOneOrFail(
+      Mantenimiento,
+      { id: res.locals.id },
+      {
+        populate: [
+          "tareas",
+          "luminarias",
+          "equiposAux",
+          "servicioLuz",
+          "empleado",
+        ],
+      }
+    );
+    res.json({ data: mantenimiento });
+  } catch (err) {
+    handleOrmError(res, err);
+  }
 }
 
-async function add(req: Request, res: Response){
-    try {
-        const mantenimiento = await em.create(Mantenimiento, res.locals.mantenimientoNuevo)
-        await em.flush()
-        res.status(201).json({message: "Mantenimiento creado", data: mantenimiento})
-    } catch (err) {
-        handleOrmError(res, err)
-    }
+async function add(req: Request, res: Response) {
+  try {
+    const mantenimiento = await em.create(
+      Mantenimiento,
+      res.locals.mantenimientoNuevo
+    );
+    await em.flush();
+    res
+      .status(201)
+      .json({ message: "Mantenimiento creado", data: mantenimiento });
+  } catch (err) {
+    handleOrmError(res, err);
+  }
 }
 
 async function update(req: Request, res: Response) {
-    try {
-        const mantenimiento = await em.findOneOrFail(Mantenimiento, { id: res.locals.id });
-        em.assign(mantenimiento, res.locals.mantenimientoActualizado);
-        await em.flush();
-        res.json({ message: "Mantenimiento actualizado", data: mantenimiento });
-    } catch (err) {
-        handleOrmError(res, err);
-    }
+  try {
+    const mantenimiento = await em.findOneOrFail(Mantenimiento, {
+      id: res.locals.id,
+    });
+    em.assign(mantenimiento, res.locals.mantenimientoParcial);
+    await em.flush();
+    res.json({ message: "Mantenimiento actualizado", data: mantenimiento });
+  } catch (err) {
+    handleOrmError(res, err);
+  }
 }
 
 async function remove(req: Request, res: Response) {
-    try {
-        const mantenimiento = await em.findOneOrFail(Mantenimiento, { id: res.locals.id });
-        const mantenimientoRef = em.getReference(Mantenimiento, res.locals.id)
-        await em.removeAndFlush(mantenimientoRef)
+  try {
+    const mantenimiento = await em.findOneOrFail(Mantenimiento, {
+      id: res.locals.id,
+    });
+    const mantenimientoRef = em.getReference(Mantenimiento, res.locals.id);
+    await em.removeAndFlush(mantenimientoRef);
 
-        res.json({ message: "Mantenimiento eliminado", data: mantenimiento });
-    } catch (err) {
-        handleOrmError(res, err);
-    }
+    res.json({ message: "Mantenimiento eliminado", data: mantenimiento });
+  } catch (err) {
+    handleOrmError(res, err);
+  }
 }
 
 // middleware
 
 function validateExists(req: Request, res: Response, next: NextFunction) {
-    const id = parseInt(req.params.id);
+  const id = parseInt(req.params.id);
 
-    if (Number.isNaN(id)) 
-        return res.status(400).json({message: "El id debe ser un número entero"})
-    
-    res.locals.id = id
+  if (Number.isNaN(id))
+    return res.status(400).json({ message: "El id debe ser un número entero" });
 
-    next()
+  res.locals.id = id;
+
+  next();
 }
 
 async function sanitizeInput(req: Request, res: Response, next: NextFunction) {
-    const incoming = await validarMantenimiento(req.body)
-    if (!incoming.success)
-        return res.status(400).json({message: incoming.issues[0].message})
-    const mantenimientoNuevo = incoming.output
+  const incoming = await validarMantenimiento(req.body);
+  if (!incoming.success)
+    return res.status(400).json({ message: incoming.issues[0].message });
+  const mantenimientoNuevo = incoming.output;
 
-    res.locals.mantenimientoNuevo = mantenimientoNuevo
+  res.locals.mantenimientoNuevo = mantenimientoNuevo;
 
-    const sanitizedInput = res.locals.mantenimientoNuevo
+  const sanitizedInput = res.locals.mantenimientoNuevo;
 
-    Object.keys(sanitizedInput).forEach(key => {
-        if (sanitizedInput[key] === undefined){
-            delete sanitizedInput[key]
-            }
-    });
-    
-    next()
+  Object.keys(sanitizedInput).forEach((key) => {
+    if (sanitizedInput[key] === undefined) {
+      delete sanitizedInput[key];
+    }
+  });
+
+  next();
 }
 
-async function sanitizePartialInput(req: Request, res: Response, next: NextFunction) {
-    const incoming = await validarMantenimientoOpcional(req.body)
-    if (!incoming.success)
-        return res.status(400).json({message: incoming.issues[0].message})
-    const mantenimientoParcial = incoming.output
+async function sanitizePartialInput(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  const incoming = await validarMantenimientoOpcional(req.body);
+  if (!incoming.success)
+    return res.status(400).json({ message: incoming.issues[0].message });
+  const mantenimientoParcial = incoming.output;
 
-    res.locals.mantenimientoParcial = mantenimientoParcial
+  res.locals.mantenimientoParcial = mantenimientoParcial;
 
-    const sanitizedInput = res.locals.mantenimientoParcial
+  const sanitizedInput = res.locals.mantenimientoParcial;
 
-    Object.keys(sanitizedInput).forEach(key => {
-        if (sanitizedInput[key] === undefined){
-            delete sanitizedInput[key]
-            }
-    });
-    
-    next()
+  Object.keys(sanitizedInput).forEach((key) => {
+    if (sanitizedInput[key] === undefined) {
+      delete sanitizedInput[key];
+    }
+  });
+
+  next();
 }
 function handleOrmError(res: Response, err: any) {
-        if (err.code) {
-          switch (err.code) {
-            case "ER_DUP_ENTRY":
-              // Ocurre cuando el usuario quiere crear un objeto con un atributo duplicado en una tabla marcada como Unique
-              res.status(400).json({message: `Hay entradas duplicadas que deberian ser unicas`})
-              break
-            case "ER_DATA_TOO_LONG":
-              res.status(400).json({message: `Datos muy largos.`})
-              break
-          }
-        }
-        else {
-          switch (err.name) {
-            case "NotFoundError":
-              res.status(404).json({message: `Columna no encontrada para ese ID ${res.locals.id}`})
-              break
-            default:
-              console.error("\n--- ORM ERROR ---")
-              console.error(err.message)
-              res.status(500).json({message: "Tuki'nt."})
-              break
-          }
-        }
-      }
+  if (err.code) {
+    switch (err.code) {
+      case "ER_DUP_ENTRY":
+        // Ocurre cuando el usuario quiere crear un objeto con un atributo duplicado en una tabla marcada como Unique
+        res
+          .status(400)
+          .json({ message: `Hay entradas duplicadas que deberian ser unicas` });
+        break;
+      case "ER_DATA_TOO_LONG":
+        res.status(400).json({ message: `Datos muy largos.` });
+        break;
+    }
+  } else {
+    switch (err.name) {
+      case "NotFoundError":
+        res
+          .status(404)
+          .json({
+            message: `Columna no encontrada para ese ID ${res.locals.id}`,
+          });
+        break;
+      default:
+        console.error("\n--- ORM ERROR ---");
+        console.error(err.message);
+        res.status(500).json({ message: "Tuki'nt." });
+        break;
+    }
+  }
+}
 
-    
-    function throw500(res: Response, err: any) {
-       res.status(500).json({ message: ERR_500 })
-     }
+function throw500(res: Response, err: any) {
+  res.status(500).json({ message: ERR_500 });
+}
 
-export { findAll, findOne, add, update, remove, validateExists, sanitizeInput, sanitizePartialInput }
+export {
+  findAll,
+  findOne,
+  add,
+  update,
+  remove,
+  validateExists,
+  sanitizeInput,
+  sanitizePartialInput,
+};
