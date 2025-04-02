@@ -1,34 +1,41 @@
-import { Entity, Property, ManyToMany, Collection, OneToMany, ManyToOne, Rel } from "@mikro-orm/core";
+import {
+  Entity,
+  Property,
+  ManyToMany,
+  Collection,
+  OneToMany,
+  ManyToOne,
+  Rel,
+} from "@mikro-orm/core";
 import { Base } from "../shared/db/base.entity.js";
 import { ServicioLuz } from "../servicioLuz/servicioLuz.entity.js";
 import { Mantenimiento } from "../mantenimiento/mantenimiento.entity.js";
 
 @Entity()
 export class EquipoAux extends Base {
-    @Property({nullable: false, unique: true})
-    nroSerie!: string;    
-    
-    @Property({nullable: false})
-    marca!: string;
+  @Property({ nullable: false, unique: true })
+  nroSerie!: string;
 
-    @Property({nullable: false})
-    tipo!: string;
+  @Property({ nullable: false })
+  marca!: string;
 
-    @Property({nullable: false})
-    fechaAdquisicion!: Date;
+  @Property({ nullable: false })
+  tipo!: string;
 
-    @Property({nullable: true})        //Deberia actualizarse cuando un equipo auxiliar se instala en un servicio
-    fechaInstalacion!: Date;
+  @Property({ nullable: false })
+  fechaAdquisicion!: Date;
 
-    @ManyToOne(() => ServicioLuz, {nullable: true})
-    serviciosLuz!: Rel<ServicioLuz>;
+  @Property({ nullable: true }) //Deberia actualizarse cuando un equipo auxiliar se instala en un servicio
+  fechaInstalacion!: Date;
 
-    @ManyToOne(() => Mantenimiento, { nullable: true })
-    mantenimiento!: Rel<Mantenimiento>;
+  @ManyToOne(() => ServicioLuz, { nullable: true })
+  serviciosLuz!: Rel<ServicioLuz>;
 
+  @ManyToOne(() => Mantenimiento, { nullable: true })
+  mantenimiento!: Rel<Mantenimiento>;
 }
 
 export enum Tipo {
-    Driver = 'Driver',
-    Balastro = 'Balastro',
+  Driver = "Driver",
+  Balastro = "Balastro",
 }
