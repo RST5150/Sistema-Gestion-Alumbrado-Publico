@@ -9,6 +9,7 @@ const ERR_ID_EQUIPO_AUX = `Es necesario al menos un id de equipo auxiliar`
 const ERR_ID_EQUIPO_AUX_MAX = `No se pueden instalar más de 5 equipos auxiliares`
 const ERR_ID_COLUMNAS = `Es necesario un id de columna`
 const ERR_FECHA = `La fecha debe ser una fecha válida`
+const ARRAY_ERROR = `Si ves esto, no estas enviando un array pa`
 
 const id = v.pipe(
     v.number(ERR_ID),
@@ -21,13 +22,13 @@ const fechaInstalacion = v.pipe(
 )
 
 const luminaria = v.pipe(
-    v.array(v.number('gei')),
+    v.array(v.number(ARRAY_ERROR)),
     v.minLength(1, ERR_ID_LUMINARIA),
     v.maxLength(5, ERR_ID_LUMINARIA_MAX),
 )
 
 const equipoAux = v.pipe(
-    v.array(v.number('gei')),
+    v.array(v.number(ARRAY_ERROR)),
     v.minLength(1, ERR_ID_EQUIPO_AUX),
     v.maxLength(5, ERR_ID_EQUIPO_AUX_MAX),
 )

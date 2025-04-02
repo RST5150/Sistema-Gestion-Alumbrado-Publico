@@ -17,7 +17,7 @@ export class EquipoAux extends Base {
     @Property({nullable: false})
     fechaAdquisicion!: Date;
 
-    @Property({nullable: true})
+    @Property({nullable: true})        //Deberia actualizarse cuando un equipo auxiliar se instala en un servicio
     fechaInstalacion!: Date;
 
     @ManyToOne(() => ServicioLuz, {nullable: true})

@@ -12,6 +12,8 @@ const ERR_VALOR_PAT = `El valor PAT debe ser un número`
 const fal = Falla
 const ERR_FALLA = `La falla debe ser Luminaria, Equipo Auxiliar, Ambos o Ninguno`
 const ERR_FECHA = `La fecha debe ser una fecha válida`
+const ARRAY_ERROR = `Si ves esto, no estas enviando un array pa`
+
 
 const id = v.pipe(
     v.number(ERR_ID),

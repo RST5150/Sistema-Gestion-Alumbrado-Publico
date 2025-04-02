@@ -20,7 +20,7 @@ export class Luminaria extends Base {
     @Property({nullable: false})
     fechaAdquisicion!: Date;
 
-    @Property({nullable: true})
+    @Property({nullable: true})         //Deberia actualizarse cuando una luminaria se instala en un servicio
     fechaInstalacion!: Date;
 
     @ManyToOne(() => ServicioLuz, {nullable: true}) // error de dependencia circular

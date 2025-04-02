@@ -13,7 +13,7 @@ export class Columna extends Base {
     @Property({nullable: false})
     fechaAdquisicion!: Date;
 
-    @Property({nullable: true})
+    @Property({nullable: true})     //Deberia actualizarse cuando una columna se instala en un servicio
     fechaInstalacion!: Date;
 
     @OneToOne(() => ServicioLuz, { nullable: true }) 
