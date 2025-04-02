@@ -31,7 +31,7 @@ export class Luminaria extends Base {
   fechaInstalacion!: Date;
 
   @ManyToOne(() => ServicioLuz, { nullable: true }) // error de dependencia circular
-  serviciosLuz!: Rel<ServicioLuz>;
+  serviciosLuz!: Rel<ServicioLuz | null>;
 
   @ManyToOne(() => Mantenimiento, { nullable: true })
   mantenimiento!: Rel<Mantenimiento>;

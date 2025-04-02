@@ -29,7 +29,7 @@ export class EquipoAux extends Base {
   fechaInstalacion!: Date;
 
   @ManyToOne(() => ServicioLuz, { nullable: true })
-  serviciosLuz!: Rel<ServicioLuz>;
+  serviciosLuz!: Rel<ServicioLuz> | null;
 
   @ManyToOne(() => Mantenimiento, { nullable: true })
   mantenimiento!: Rel<Mantenimiento>;
