@@ -10,7 +10,7 @@ const em = orm.em;
 async function findAll(req: Request, res: Response) {
   try {
     const columnas = await em.find(Columna, {});
-    res.json({ date: columnas });
+    res.json({ data: columnas });
   } catch (err) {
     handleOrmError(res, err);
   }
