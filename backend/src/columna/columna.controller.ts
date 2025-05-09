@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { Columna } from "./columna.entity.js";
 import { validarColumna, validarColumnaOpcional } from "./columna.schema.js";
 import { orm } from "../shared/db/orm.js";
+import { FilterQuery } from "@mikro-orm/core";
 
 const ERR_500 = "Oops! Something went wrong. This is our fault.";
 
@@ -81,6 +82,27 @@ async function findManyByIds(req: Request, res: Response) {
     }
 
     const columnas = await em.find(Columna, { id: { $in: ids } });
+    res.json({ data: columnas });
+  } catch (err) {
+    handleOrmError(res, err);
+  }
+}
+
+async function findManyByAttributes(req: Request, res: Response) {
+  try {
+    const query: FilterQuery<Columna> & { $and: FilterQuery<Columna>[] } = {
+      $and: []
+    };
+    if (req.body.material) {
+      query.$and.push({ material: req.body.material });
+    }
+    if (req.body.fechaAdquisicionDesde) {
+      query.$and.push({fechaAdquisicion: {$gte: req.body.fechaAdquisicionDesde}});
+    }
+    if (req.body.fechaAdquisicionHasta) {
+      query.$and.push({fechaAdquisicion: {$lte: req.body.fechaAdquisicionHasta}});
+    }
+    const columnas = await em.find(Columna, query);
     res.json({ data: columnas });
   } catch (err) {
     handleOrmError(res, err);
@@ -171,4 +193,5 @@ export {
   sanitizeInput,
   sanitizePartialInput,
   findManyByIds,
+  findManyByAttributes
 };

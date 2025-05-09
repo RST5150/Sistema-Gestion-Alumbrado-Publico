@@ -5,6 +5,7 @@ import {
   validarEquipoAuxiliarOpcional,
 } from "./equipoAuxiliar.schema.js";
 import { orm } from "../shared/db/orm.js";
+import { FilterQuery } from "@mikro-orm/core";
 
 const ERR_500 = "Oops! Something went wrong. This is our fault.";
 
@@ -72,6 +73,30 @@ async function remove(req: Request, res: Response) {
     await em.removeAndFlush(equipoAuxiliarRef);
 
     res.json({ message: "Equipo Auxiliar eliminado", data: equipoAuxiliar });
+  } catch (err) {
+    handleOrmError(res, err);
+  }
+}
+
+async function findManyByAttributes(req: Request, res: Response) {
+  try {
+    const query: FilterQuery<EquipoAux> & { $and: FilterQuery<EquipoAux>[] } = {
+      $and: []
+    };
+    if (req.body.marca) {
+      query.$and.push({ marca: req.body.marca });
+    }
+    if (req.body.tipo) {
+      query.$and.push({ tipo: req.body.tipo });
+    }
+    if (req.body.fechaAdquisicionDesde) {
+      query.$and.push({fechaAdquisicion: {$gte: req.body.fechaAdquisicionDesde}});
+    }
+    if (req.body.fechaAdquisicionHasta) {
+      query.$and.push({fechaAdquisicion: {$lte: req.body.fechaAdquisicionHasta}});
+    }
+    const equipoAuxiliar = await em.find(EquipoAux, query);
+    res.json({ data: equipoAuxiliar });
   } catch (err) {
     handleOrmError(res, err);
   }
@@ -178,4 +203,5 @@ export {
   validateExists,
   sanitizeInput,
   sanitizePartialInput,
+  findManyByAttributes
 };

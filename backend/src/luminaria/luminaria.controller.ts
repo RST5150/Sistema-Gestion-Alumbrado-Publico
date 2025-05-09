@@ -5,6 +5,7 @@ import {
   validarLuminariaOpcional,
 } from "./luminaria.schema.js";
 import { orm } from "../shared/db/orm.js";
+import { FilterQuery } from "@mikro-orm/core";
 
 const ERR_500 = "Oops! Something went wrong. This is our fault.";
 
@@ -61,6 +62,33 @@ async function remove(req: Request, res: Response) {
     await em.removeAndFlush(luminariaRef);
 
     res.json({ message: "Luminaria eliminada", data: luminaria });
+  } catch (err) {
+    handleOrmError(res, err);
+  }
+}
+
+async function findManyByAttributes(req: Request, res: Response) {
+  try {
+    const query: FilterQuery<Luminaria> & { $and: FilterQuery<Luminaria>[] } = {
+      $and: []
+    };
+    if (req.body.marca) {
+      query.$and.push({ marca: req.body.marca });
+    }
+    if (req.body.tecnologia) {
+      query.$and.push({ tecnologia: req.body.tecnologia });
+    }
+    if (req.body.potencia) {
+      query.$and.push({ potencia: req.body.potencia });
+    }
+    if (req.body.fechaAdquisicionDesde) {
+      query.$and.push({fechaAdquisicion: {$gte: req.body.fechaAdquisicionDesde}});
+    }
+    if (req.body.fechaAdquisicionHasta) {
+      query.$and.push({fechaAdquisicion: {$lte: req.body.fechaAdquisicionHasta}});
+    }
+    const luminarias = await em.find(Luminaria, query);
+    res.json({ data: luminarias });
   } catch (err) {
     handleOrmError(res, err);
   }
@@ -168,4 +196,5 @@ export {
   validateExists,
   sanitizeInput,
   sanitizePartialInput,
+  findManyByAttributes
 };

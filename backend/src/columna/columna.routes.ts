@@ -9,6 +9,7 @@ import {
   validateExists,
   sanitizePartialInput,
   findManyByIds,
+  findManyByAttributes,
 } from "./columna.controller.js";
 
 export const columnaRouter = Router();
@@ -20,6 +21,7 @@ columnaRouter.get("/:id", validateExists, findOne);
 columnaRouter.put("/:id", validateExists, sanitizeInput, update);
 columnaRouter.patch("/:id", validateExists, sanitizePartialInput, update);
 columnaRouter.delete("/:id", validateExists, remove);
-columnaRouter.post("/findMany", findManyByIds);
+columnaRouter.post("/findManyIds", findManyByIds);
+columnaRouter.post("/findMany", sanitizePartialInput, findManyByAttributes);
 
 export default columnaRouter;
