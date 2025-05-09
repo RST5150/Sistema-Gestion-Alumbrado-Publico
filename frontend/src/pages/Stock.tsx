@@ -6,7 +6,7 @@ export default function Stock() {
 
 	const [ product, setProduct ] = useState("");
 
-	const productSpecs: { [key: string]: { displayName: string, filters: Object, headers: Array<string>, dataKeys: Array<string> }} = {
+	const productSpecs: { [key: string]: { displayName: string, filters: Object, headers: Array<string>, dataKeys: Array<string>, discreteValues: {[key: string]: string[] } | null }} = {
 		columnas: {
 			displayName: "columnas",
 			filters: {
@@ -15,7 +15,8 @@ export default function Stock() {
 				fechaAdquisicionHasta: "Fecha de adquisición (hasta)"
 			},
 			headers: ["ID", "Nro de serie", "Material", "Fecha de adquisición", "Fecha de instalación", "Opciones"],
-			dataKeys: ["id", "nroSerie", "material", "fechaAdquisicion", "fechaInstalacion"]
+			dataKeys: ["id", "nroSerie", "material", "fechaAdquisicion", "fechaInstalacion"],
+			discreteValues: null
 		},
 		equiposAuxiliares: {
 			displayName: "equipos auxiliares",
@@ -26,7 +27,10 @@ export default function Stock() {
 				fechaAdquisicionHasta: "Fecha de adquisición (hasta)"
 			},
 			headers: ["ID", "Nro de serie", "Marca", "Tipo", "Fecha de adquisición", "Fecha de instalación", "Opciones"],
-			dataKeys: ["id", "nroSerie", "marca", "tipo", "fechaAdquisicion", "fechaInstalacion"]
+			dataKeys: ["id", "nroSerie", "marca", "tipo", "fechaAdquisicion", "fechaInstalacion"],
+			discreteValues: {
+				tipo: ["Driver", "Balastro"]
+			}
 		},
 		luminarias: {
 			displayName: "luminarias",
@@ -38,13 +42,17 @@ export default function Stock() {
 				fechaAdquisicionHasta: "Fecha de adquisición (hasta)",
 			},
 			headers: ["ID", "Nro de serie", "Marca", "Tecnología", "Potencia", "Fecha de adquisición", "Fecha de instalación", "Opciones"],
-			dataKeys: ["id", "nroSerie", "marca", "tecnologia", "potencia", "fechaAdquisicion", "fechaInstalación"]
+			dataKeys: ["id", "nroSerie", "marca", "tecnologia", "potencia", "fechaAdquisicion", "fechaInstalación"],
+			discreteValues: {
+				tecnologia: ["LED", "Sodio", "Mercurio"]
+			}
 		},
 		servicios: {
 			displayName: "servicios",
 			filters: {},
 			headers: [],
-			dataKeys: []
+			dataKeys: [],
+			discreteValues: null
 		}
 	};
 

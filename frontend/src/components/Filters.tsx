@@ -21,7 +21,7 @@ async function fetchDataU(p: string, args: Object) {
 	}
 }
 
-export default function Filters({product, handleProduct, specs }: {product: string, handleProduct: Function, specs: { filters: Record<string, any>, displayName: string, headers: string[], dataKeys: string[] }}) {
+export default function Filters({product, handleProduct, specs }: {product: string, handleProduct: Function, specs: { filters: Record<string, any>, displayName: string, headers: string[], dataKeys: string[], discreteValues: {[key: string]: string[] } | null}}) {
 
 	const [ filtering, setFiltering ] = useState({});
 	const [ searched, setSearched ] = useState(false);
@@ -49,9 +49,15 @@ export default function Filters({product, handleProduct, specs }: {product: stri
 				</Suspense>
 			: <>
 				<form onSubmit={handleSubmit}>
-					{Object.keys(specs.filters).map((key) => 
-						<label key={key}> {specs.filters[key]} 
-							<input type={key.includes("fecha") ? "date" : "text"} id={key} name={key}/> 
+					{Object.keys(specs.filters).map((key) =>
+						<label key={key}> {specs.filters[key]}
+							{specs.discreteValues != null && specs.discreteValues[key] ?
+								<select name={key} id={key} defaultValue="">
+									<option value="">Seleccione</option>
+									{specs.discreteValues[key].map((v) => <option key={v} value={v}>{v}</option>)}
+								</select>
+							: <input type={key.includes("fecha") ? "date" : "text"} id={key} name={key}/>
+							}
 						</label>
 					)}
 					<button type="submit">Consultar</button>
