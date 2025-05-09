@@ -5,10 +5,21 @@ POST http://localhost:3000/api/columnas HTTP/1.1
 content-type: application/json
 
 {
-    "nroSerie": "abcd123458",
-    "material": "Hormigon",
-    "fechaAdquisicion": "2023-03-09",
-    "fechaInstalacion": "2025-03-02"
+    "nroSerie": "abcd120470",
+    "material": "Madera",
+    "fechaAdquisicion": "2003-03-09",
+    "fechaInstalacion": "2004-05-24"
+}
+
+POST http://localhost:3000/api/columnas/findMany HTTP/1.1
+content-type: application/json
+
+{
+    "nroSerie": "abcd120470",
+    "material": "Madera",
+    "fechaAdquisicion": "2003-03-09",
+    "fechaInstalacion": "2004-05-24",
+    "ids": [2, 3]
 }
 
 // LUMINARIAS
@@ -18,12 +29,12 @@ POST http://localhost:3000/api/luminarias HTTP/1.1
 content-type: application/json
 
 {
-    "nroSerie": "abcd123461",
-    "marca": "Philips",
-	"tecnologia": "LED",
-	"potencia": "350",
-    "fechaAdquisicion": "2023-03-09",
-    "fechaInstalacion": "2025-02-19"
+    "nroSerie": "abcd120740",
+    "marca": "Osram",
+	"tecnologia": "Sodio",
+	"potencia": "900",
+    "fechaAdquisicion": "2004-04-08",
+    "fechaInstalacion": "2004-05-24"
 }
 
 // EQUIPOS AUXILIARES
@@ -33,11 +44,11 @@ POST http://localhost:3000/api/equiposAuxiliares HTTP/1.1
 content-type: application/json
 
 {
-    "nroSerie": "abcd123504",
+    "nroSerie": "abcd123510",
     "marca": "Osram",
 	"tipo": "Driver",
-    "fechaAdquisicion": "2023-03-09",
-    "fechaInstalacion": "2025-02-05"
+    "fechaAdquisicion": "2023-03-19",
+    "fechaInstalacion": "2025-03-20"
 }
 
 // SERVICIOS
@@ -47,9 +58,8 @@ POST http://localhost:3000/api/serviciosLuz HTTP/1.1
 content-type: application/json
 
 {
-    "nroSerie": "abcd123462",
-    "luminarias": ["abcd123461", "abcd123460"],
-    "equipoAuxiliar": ["abcd123504", "abcd123503"],
-    "columna": "abcd123461",
-    "fechaInstalacion": "2025-03-10"
+    "luminarias": [2],
+    "equipoAuxiliar": [3],
+    "columna": 2,
+    "fechaInstalacion": "2025-03-20"
 }

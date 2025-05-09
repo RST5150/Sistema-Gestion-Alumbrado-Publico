@@ -1,6 +1,6 @@
 import { use } from "react";
 
-export default function Table({product, dataa }: {product: string, dataa: Promise<Object>}) {
+export default function Table({ dataa, specs }: { dataa: Promise<{data: {id: Number, [key: string]: any}}>, specs: { filters: Record<string, any>, displayName: string, headers: string[], dataKeys: string[] }}) {
 
 	const dataU = use(dataa);
 
@@ -12,35 +12,31 @@ export default function Table({product, dataa }: {product: string, dataa: Promis
 		return `${dd}/${mm}/${yyyy}`;
 	}
 
-	function Thead(product: string) {
-		let headers = [];
-		if (product == "equiposAuxiliares") {
-			headers = ["ID", "Nro de serie", "Marca", "Tipo", "Fecha de adquisición", "Fecha de instalación", "Opciones"];
-		} else if (product == "luminarias") {
-			headers = ["ID", "Nro de serie", "Marca", "Tecnología", "Potencia", "Fecha de adquisición", "Fecha de instalación", "Opciones"];
-		} else if (product == "columnas") {
-			headers = ["ID", "Nro de serie", "Material", "Fecha de adquisición", "Fecha de instalación", "Opciones"];
-		} else {
-			headers = ["Error al obtener el tipo de producto"];
-		}
+	function Thead({ headers }: {headers: string[]}) {
 		return headers.map((h, index) => <th key={index}>{h}</th>);
 	}
+
 	return (
 		<>
+		{dataU.data && Object.keys(dataU.data).length ?
 			<table>
 				<thead>
 					<tr>
-						{Thead(product)}
+						<Thead headers={specs.headers}/>
 					</tr>
 				</thead>
 				<tbody>
-					{dataU.data.map((d) => <tr key={d.id}>
-							{Object.keys(d).map((key) => <td key={key}>{key.includes("fecha") ? formatDate(d[key]) : d[key]}</td>)}
+					{dataU.data.map((d: { [key: string]: any}) =>
+						<tr key={d.id}>
+							{Object.keys(d).map(key => <td key={key}>{key.includes("fecha") ? formatDate(d[key]) : specs.dataKeys.includes(key) ? d[key] : ""}</td>)}
 						</tr>
-					)
-					}
+					)}
 				</tbody>
 			</table>
+		: <div>
+			<p>No se encontró ningún resultado con esos parámetros de búsqueda.</p>
+		</div>
+		}
 		</>
 	);
 }
