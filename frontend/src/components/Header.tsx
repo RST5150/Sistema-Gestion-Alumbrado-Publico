@@ -4,9 +4,7 @@ export default function Header() {
 	return (
 		<header>
 			<nav>
-				<ul>
-					<li><NavLink to="/">Inicio</NavLink></li>
-				</ul>
+				<NavLink to="/">Inicio</NavLink>
 			</nav>
 		</header>
 	);

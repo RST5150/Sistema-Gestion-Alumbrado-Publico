@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useState } from "react";
 import { domain, baseDir } from "../utils/config";
 import Table from "./Table";
 
@@ -21,7 +21,13 @@ async function fetchDataU(p: string, args: Object) {
 	}
 }
 
-export default function Filters({product, handleProduct, specs }: {product: string, handleProduct: Function, specs: { filters: Record<string, any>, displayName: string, headers: string[], dataKeys: string[], discreteValues: {[key: string]: string[] } | null}}) {
+export default function Filters({
+		product, handleProduct, specs 
+	}: {
+		product: string, handleProduct: Function, specs: { 
+			filters: Record<string, any>, displayName: string, headers: {[key: string]: string[] }, dataKeys: {[key: string]: string[] }, discreteValues: {[key: string]: string[] } | null
+		}
+	}) {
 
 	const [ filtering, setFiltering ] = useState({});
 	const [ searched, setSearched ] = useState(false);
@@ -35,38 +41,39 @@ export default function Filters({product, handleProduct, specs }: {product: stri
 		setSearched(true);
 	}
 
-	useEffect(() => {
-        console.log("Updated filtering state: ", filtering);
-    }, [filtering]); // This effect runs whenever 'filtering' changes
-
 	return (
 		<>
 			<h3>Consulta de stock de {specs.displayName}</h3>
-			{searched ?
+			{searched ? (
 				<Suspense fallback = {<div>Cargando...</div>}>
-					<Table dataa={fetchDataU(product, filtering)} specs={specs}></Table>
+					<Table dataa={fetchDataU(product, filtering)} specs={specs} referrer="stock" />
+					<br/>
 					<button type="button" onClick={() => setSearched(false)}>Volver</button>
 				</Suspense>
-			: <>
-				<form onSubmit={handleSubmit}>
-					{Object.keys(specs.filters).map((key) =>
-						<label key={key}> {specs.filters[key]}
-							{specs.discreteValues != null && specs.discreteValues[key] ?
-								<select name={key} id={key} defaultValue="">
-									<option value="">Seleccione</option>
-									{specs.discreteValues[key].map((v) => <option key={v} value={v}>{v}</option>)}
-								</select>
-							: <input type={key.includes("fecha") ? "date" : "text"} id={key} name={key}/>
-							}
-						</label>
-					)}
-					<button type="submit">Consultar</button>
-				</form>
-				<button type="button" onClick={() => {setSearched(true); setFiltering({})}}>Buscar todo</button>
-				<br/>
-				<button type="button" id="resetProduct" onClick={() => handleProduct("")}>Volver</button>
-			</>
-			}
+			) : (
+				<>
+					<form onSubmit={handleSubmit}>
+						{Object.keys(specs.filters).map((key) => (
+							<div key={key}>
+								<label> {specs.filters[key]} &nbsp;
+									{specs.discreteValues != null && specs.discreteValues[key] ? (
+										<select name={key} id={key} defaultValue="">
+											<option value="">Seleccione</option>
+											{specs.discreteValues[key].map((v) => <option key={v} value={v}>{v}</option>)}
+										</select>
+									) : (
+										<input type={key.includes("fecha") ? "date" : "text"} id={key} name={key}/>
+									)}
+								</label>
+							</div>
+						))}
+						<button type="submit">Consultar</button>
+					</form>
+					<button type="button" onClick={() => {setSearched(true); setFiltering({})}}>Buscar todo</button>
+					<br/>
+					<button type="button" id="resetProduct" onClick={() => handleProduct("")}>Volver</button>
+				</>
+			)}
 		</>
 	);
 }
