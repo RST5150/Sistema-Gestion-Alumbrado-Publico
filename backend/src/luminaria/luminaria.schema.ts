@@ -61,6 +61,13 @@ const fechaInstalacion = v.pipe(
     v.maxValue(FECHA_MAX, ERR_FECHA),
 )
 
+const fechaRemocion = v.optional(v.pipe(
+  v.string(),
+  v.isoDate(ERR_FECHA),
+  v.minValue(FECHA_MIN, ERR_FECHA),
+  v.maxValue(FECHA_MAX, ERR_FECHA),
+))
+
 export const luminariaSchema = v.object({
     nroSerie: nroSerie,
     marca: v.string(),
@@ -68,6 +75,7 @@ export const luminariaSchema = v.object({
     potencia: potencia,
     fechaAdquisicion: fechaAdquisicion,
     fechaInstalacion: v.optional(fechaInstalacion),
+    fechaRemocion: v.optional(fechaRemocion),
     idServicio: v.optional(id),
     idMantenimiento: v.optional(id),
 })

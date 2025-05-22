@@ -1,12 +1,8 @@
 import {
   Entity,
   Property,
-  ManyToOne,
   Collection,
-  Cascade,
   OneToMany,
-  OneToOne,
-  Rel,
 } from "@mikro-orm/core";
 import { Base } from "../shared/db/base.entity.js";
 import { Luminaria } from "../luminaria/luminaria.entity.js";
@@ -20,22 +16,20 @@ export class ServicioLuz extends Base {
   @Property({ nullable: false })
   fechaInstalacion!: Date;
 
-  @OneToMany(() => Luminaria, (luminaria) => luminaria.serviciosLuz, {
+  @OneToMany(() => Luminaria, (luminaria) => luminaria.servicioLuz, {
     lazy: true,
   })
   luminarias = new Collection<Luminaria>(this);
 
-  @OneToMany(() => EquipoAux, (equipoAux) => equipoAux.serviciosLuz, {
+  @OneToMany(() => EquipoAux, (equipoAux) => equipoAux.servicioLuz, {
     lazy: true,
   })
   equipoAuxiliar = new Collection<EquipoAux>(this);
 
-  @OneToOne(() => Columna, (columna) => columna.servicio, {
-    cascade: [Cascade.PERSIST, Cascade.MERGE],
-    owner: true,
-    nullable: true,
+  @OneToMany(() => Columna, (columna) => columna.servicioLuz, {
+    lazy: true,
   })
-  columna!: Rel<Columna>;
+  columna = new Collection<Columna>(this);
 
   @OneToMany(
     () => Mantenimiento,

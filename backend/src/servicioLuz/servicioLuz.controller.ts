@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { ServicioLuz } from './servicioLuz.entity.js'
 import { validarServicioLuz, validarServicioLuzOpcional } from './servicioLuz.schema.js'
 import { orm } from '../shared/db/orm.js'
+import { Columna } from "../columna/columna.entity.js";
 
 const ERR_500 = "Oops! Something went wrong. This is our fault."
 
@@ -27,7 +28,11 @@ async function findOne(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
     try {
-        const servicioLuz = await em.create(ServicioLuz, res.locals.servicioLuzNuevo)
+        const servicioLuz = em.create(ServicioLuz, res.locals.servicioLuzNuevo)
+        if (res.locals.servicioLuzNuevo.columna) {
+            const columna = em.getReference(Columna, res.locals.servicioLuzNuevo.columna)
+            servicioLuz.columna.add(columna)
+        }
         await em.flush()
         res.status(201).json({message: "Servicio de luz creado", data: servicioLuz})
     } catch (err) {

@@ -31,7 +31,7 @@ async function findOne(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
   try {
-    const luminaria = await em.create(Luminaria, res.locals.luminariaNueva);
+    const luminaria = em.create(Luminaria, res.locals.luminariaNueva);
     await em.flush();
     res.status(201).json({ message: "Luminaria creada", data: luminaria });
   } catch (err) {
@@ -43,9 +43,9 @@ async function update(req: Request, res: Response) {
   try {
     const luminaria = await em.findOneOrFail(Luminaria, { id: res.locals.id });
     em.assign(luminaria, res.locals.luminariaParcial);
-    if (req.body.hasOwnProperty("serviciosLuz")) {
-      if (req.body.serviciosLuz === null) {
-        luminaria.serviciosLuz = null;
+    if (req.body.hasOwnProperty("servicioLuz")) {
+      if (req.body.servicioLuz === null) {
+        luminaria.servicioLuz = null;
       }
     }
     await em.flush();

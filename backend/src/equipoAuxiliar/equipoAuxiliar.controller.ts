@@ -33,7 +33,7 @@ async function findOne(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
   try {
-    const equipoAuxiliar = await em.create(
+    const equipoAuxiliar = em.create(
       EquipoAux,
       res.locals.equipoAuxiliarNuevo
     );
@@ -52,9 +52,9 @@ async function update(req: Request, res: Response) {
       id: res.locals.id,
     });
     em.assign(equipoAuxiliar, res.locals.equipoAuxiliarParcial);
-    if (req.body.hasOwnProperty("serviciosLuz")) {
-      if (req.body.serviciosLuz === null) {
-        equipoAuxiliar.serviciosLuz = null;
+    if (req.body.hasOwnProperty("servicioLuz")) {
+      if (req.body.servicioLuz === null) {
+        equipoAuxiliar.servicioLuz = null;
       }
     }
     await em.flush();

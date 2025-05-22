@@ -1,9 +1,6 @@
 import {
   Entity,
   Property,
-  ManyToMany,
-  Collection,
-  OneToMany,
   ManyToOne,
   Rel,
 } from "@mikro-orm/core";
@@ -28,11 +25,11 @@ export class EquipoAux extends Base {
   @Property({ nullable: true }) //Deberia actualizarse cuando un equipo auxiliar se instala en un servicio
   fechaInstalacion!: Date;
 
-  @ManyToOne(() => ServicioLuz, { nullable: true })
-  serviciosLuz!: Rel<ServicioLuz> | null;
+  @Property({ nullable: true })
+  fechaRemocion!: Date;
 
-  @ManyToOne(() => Mantenimiento, { nullable: true })
-  mantenimiento!: Rel<Mantenimiento>;
+  @ManyToOne(() => ServicioLuz, { nullable: true })
+  servicioLuz!: Rel<ServicioLuz> | null;
 }
 
 export enum Tipo {

@@ -28,7 +28,7 @@ async function findOne(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
   try {
-    const columna = await em.create(Columna, res.locals.columnaNueva);
+    const columna = em.create(Columna, res.locals.columnaNueva);
     await em.flush();
     res.status(201).json({ message: "Columna creada", data: columna });
   } catch (err) {
@@ -40,6 +40,11 @@ async function update(req: Request, res: Response) {
   try {
     const columna = await em.findOneOrFail(Columna, { id: res.locals.id });
     em.assign(columna, res.locals.columnaParcial);
+    if (req.body.hasOwnProperty("servicioLuz")) {
+      if (req.body.servicioLuz === null) {
+        columna.servicioLuz = null;
+      }
+    }
     await em.flush();
     res.json({ message: "Columna actualizada", data: columna });
   } catch (err) {

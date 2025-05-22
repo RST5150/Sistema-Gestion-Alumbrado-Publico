@@ -45,16 +45,6 @@ export class Mantenimiento extends Base {
 
   @ManyToOne(() => Empleado, { nullable: true })
   empleado!: Rel<Empleado>;
-
-  @OneToMany(() => Luminaria, (luminaria) => luminaria.mantenimiento, {
-    cascade: [Cascade.ALL],
-  })
-  luminarias = new Collection<Luminaria>(this);
-
-  @OneToMany(() => EquipoAux, (equipoAux) => equipoAux.mantenimiento, {
-    cascade: [Cascade.ALL],
-  })
-  equiposAux = new Collection<EquipoAux>(this);
 }
 
 export enum Estado {

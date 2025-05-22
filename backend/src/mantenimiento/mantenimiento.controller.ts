@@ -18,8 +18,6 @@ async function findAll(req: Request, res: Response) {
       {
         populate: [
           "tareas",
-          "luminarias",
-          "equiposAux",
           "servicioLuz",
           "empleado",
         ],
@@ -39,8 +37,6 @@ async function findOne(req: Request, res: Response) {
       {
         populate: [
           "tareas",
-          "luminarias",
-          "equiposAux",
           "servicioLuz",
           "empleado",
         ],
@@ -54,7 +50,7 @@ async function findOne(req: Request, res: Response) {
 
 async function add(req: Request, res: Response) {
   try {
-    const mantenimiento = await em.create(
+    const mantenimiento = em.create(
       Mantenimiento,
       res.locals.mantenimientoNuevo
     );

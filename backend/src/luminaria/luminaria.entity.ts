@@ -1,8 +1,6 @@
 import {
   Entity,
   Property,
-  ManyToMany,
-  Collection,
   ManyToOne,
   Rel,
 } from "@mikro-orm/core";
@@ -30,11 +28,11 @@ export class Luminaria extends Base {
   @Property({ nullable: true }) //Deberia actualizarse cuando una luminaria se instala en un servicio
   fechaInstalacion!: Date;
 
-  @ManyToOne(() => ServicioLuz, { nullable: true }) // error de dependencia circular
-  serviciosLuz!: Rel<ServicioLuz | null>;
+  @Property({ nullable: true })
+  fechaRemocion!: Date;
 
-  @ManyToOne(() => Mantenimiento, { nullable: true })
-  mantenimiento!: Rel<Mantenimiento>;
+  @ManyToOne(() => ServicioLuz, { nullable: true }) // error de dependencia circular
+  servicioLuz!: Rel<ServicioLuz> | null;
 }
 
 export enum Tecnologia {
