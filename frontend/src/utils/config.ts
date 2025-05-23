@@ -1,10 +1,22 @@
 export const domain = "http://localhost:3000";
 export const baseDir = "/api"
 
-export const productSpecs: { [key: string]: { productName: string, displayName: string, filters: Object, headers: {[key: string]: string[] }, manage: {[key: string]: string }, stock: {[key: string]: string }, dataKeys: {[key: string]: string[] }, discreteValues: {[key: string]: string[] } | null }} = {
+export const productSpecs: { [key: string]: { 
+		productName: string,
+		displayName: string,
+		displayNameSingular: string,
+		filters: Object,
+		headers: { [key: string]: string[] },
+		manage: { [key: string]: string },
+		stock: { [key: string]: string },
+		dataKeys: { [key: string]: string[] },
+		discreteValues: { [key: string]: string[] }	
+		| null
+	}} = {
 	columnas: {
 		productName: "columnas",
 		displayName: "columnas",
+		displayNameSingular: "columna",
 		filters: {
 			material: "Material",
 			fechaAdquisicionDesde: "Fecha de adquisición (desde)",
@@ -40,6 +52,7 @@ export const productSpecs: { [key: string]: { productName: string, displayName: 
 	equiposAuxiliares: {
 		productName: "equiposAuxiliares",
 		displayName: "equipos auxiliares",
+		displayNameSingular: "equipo auxiliar",
 		filters: {
 			marca: "Marca",
 			tipo: "Tipo",
@@ -78,6 +91,7 @@ export const productSpecs: { [key: string]: { productName: string, displayName: 
 	luminarias: {
 		productName: "luminarias",
 		displayName: "luminarias",
+		displayNameSingular: "luminaria",
 		filters: {
 			marca: "Marca",
 			tecnologia: "Tecnología",
@@ -119,6 +133,7 @@ export const productSpecs: { [key: string]: { productName: string, displayName: 
 	servicios: {
 		productName: "servicios",
 		displayName: "servicios",
+		displayNameSingular: "servicio",
 		filters: {},
 		manage: {},
 		stock: {},
