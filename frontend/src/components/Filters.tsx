@@ -29,7 +29,10 @@ export default function Filters({
 		}
 	}) {
 
-	const [ filtering, setFiltering ] = useState({});
+	const defaultFiltering = {
+		fechaInstalacion: "1970-02-02" // Hack horrible para buscar fechaInstalacion nula sin romper validaciones
+	}
+	const [ filtering, setFiltering ] = useState(defaultFiltering);
 	const [ searched, setSearched ] = useState(false);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -37,7 +40,8 @@ export default function Filters({
 		const formData = new FormData(e.currentTarget);
 		const filterParams: Record<string, any> = {};
 		Object.keys(specs.filters).map(d => { if (formData.get(d)) filterParams[d] = formData.get(d);});
-		setFiltering(filterParams);
+		const filters = {...filtering, ...filterParams}
+		setFiltering(filters);
 		setSearched(true);
 	}
 
@@ -48,7 +52,7 @@ export default function Filters({
 				<Suspense fallback = {<div>Cargando...</div>}>
 					<Table dataa={fetchDataU(product, filtering)} specs={specs} referrer="stock" />
 					<br/>
-					<button type="button" onClick={() => setSearched(false)}>Volver</button>
+					<button type="button" onClick={() => { setSearched(false); setFiltering(defaultFiltering); }}>Volver</button>
 				</Suspense>
 			) : (
 				<>
@@ -69,9 +73,9 @@ export default function Filters({
 						))}
 						<button type="submit">Consultar</button>
 					</form>
-					<button type="button" onClick={() => {setSearched(true); setFiltering({})}}>Buscar todo</button>
+					<button type="button" onClick={() => { setSearched(true); setFiltering(defaultFiltering); }}>Buscar todo</button>
 					<br/>
-					<button type="button" id="resetProduct" onClick={() => handleProduct("")}>Volver</button>
+					<button type="button" id="resetProduct" onClick={() => { handleProduct(""); setFiltering(defaultFiltering); }}>Volver</button>
 				</>
 			)}
 		</>
