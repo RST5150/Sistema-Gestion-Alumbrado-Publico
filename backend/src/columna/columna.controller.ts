@@ -107,6 +107,16 @@ async function findManyByAttributes(req: Request, res: Response) {
     if (req.body.fechaAdquisicionHasta) {
       query.$and.push({fechaAdquisicion: {$lte: req.body.fechaAdquisicionHasta}});
     }
+    if (req.body.fechaInstalacion) {
+      if (req.body.fechaInstalacion === "1970-02-02") { // Hack horrible para buscar fechaInstalacion nula sin romper validaciones
+        query.$and.push({fechaInstalacion: {$eq: null}});
+      } else {
+        query.$and.push({fechaInstalacion: {$eq: req.body.fechaInstalacion}});
+      }
+    }
+    if (req.body.fechaRemocion) {
+      query.$and.push({fechaRemocion: {$eq: req.body.fechaRemocion}});
+    }
     const columnas = await em.find(Columna, query);
     res.json({ data: columnas });
   } catch (err) {
