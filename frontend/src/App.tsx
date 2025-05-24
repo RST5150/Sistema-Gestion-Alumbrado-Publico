@@ -6,6 +6,7 @@ import Stock from './pages/Stock';
 import Manage from './pages/Manage';
 import Edit from './pages/Edit';
 import Delete from './pages/Delete';
+import Create from './pages/Create';
 
 export default function App() {
 
@@ -20,6 +21,7 @@ export default function App() {
             <Route index element={<Manage />}/>
             <Route path='modificar/:product/:id' element={<Edit />}/>
             <Route path='eliminar/:product/:id' element={<Delete />}/>
+            <Route path='crear/:product' element={<Create />}/>
           </Route>
         </Routes>
       </BrowserRouter>
