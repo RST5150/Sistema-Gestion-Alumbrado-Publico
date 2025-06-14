@@ -1,10 +1,9 @@
 import { Suspense, useState } from "react";
-import { Link, useParams } from "react-router";
 import { ErrorBoundary } from "react-error-boundary";
-import { domain, baseDir } from "../utils/config";
+import { Link, useParams } from "react-router";
 import EditForm from "../components/EditForm";
-
-
+import useAuth from "../hooks/useAuth";
+import { domain, baseDir } from "../utils/config";
 
 export default function Edit() {
 
@@ -14,9 +13,15 @@ export default function Edit() {
 
 	async function fetchData(): Promise<{data: {[key: string]: any}, message: string}> {
 		const { product, id } = useParams();
+		const { token } = useAuth();
 		const url = `${domain}${baseDir}/${product}/${id}`;
 		try {
-			const res = await fetch(url);
+			const res = await fetch(url, {
+				method: "GET",
+				headers: {
+					"Authorization": token
+				}
+			});
 			if (!res.ok) {
 				throw new Error(`Error HTTP, estado: ${res.status}`);
 			}

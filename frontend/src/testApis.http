@@ -23,11 +23,7 @@ POST http://localhost:3000/api/columnas/findMany HTTP/1.1
 content-type: application/json
 
 {
-    "nroSerie": "abcd120470",
-    "material": "Madera",
-    "fechaAdquisicion": "2003-03-09",
-    "fechaInstalacion": "2004-05-24",
-    "ids": [2, 3]
+    "fechaInstalacion": "1970-02-02"
 }
 
 // LUMINARIAS
@@ -77,4 +73,29 @@ content-type: application/json
 
 {
     "columna": null
+}
+
+// EMPLEADOS
+GET http://localhost:3000/api/empleados/3
+
+GET http://localhost:3000/api/empleados/ HTTP/1.1
+content-type: application/json
+Authorization: 
+
+{
+    "dni": "19550645",
+    "apellido": "Juan",
+    "nombre": "Jose",
+    "email": "juanjo@mail.com",
+    "telefono": "3415654785",
+    "fechaIngreso": "2022-06-30",
+    "rol": "Empleado"
+}
+
+POST http://localhost:3000/api/empleados/login HTTP/1.1
+content-type: application/json
+
+{
+    "dni": "19550640",
+    "clave": "margamarga"
 }

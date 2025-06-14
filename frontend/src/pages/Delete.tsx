@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router";
 import { ErrorBoundary } from "react-error-boundary";
 import { domain, baseDir, productSpecs } from "../utils/config";
 import DeleteConfirm from "../components/DeleteConfirm";
+import useAuth from "../hooks/useAuth";
 
 export default function Delete() {
 
@@ -13,9 +14,15 @@ export default function Delete() {
 
 	async function fetchData(): Promise<{data: {[key: string]: any}, message: string}> {
 		
+		const { token } = useAuth();
 		const url = `${domain}${baseDir}/${product}/${id}`;
 		try {
-			const res = await fetch(url);
+			const res = await fetch(url, {
+				method: "GET",
+				headers: {
+					"Authorization": token
+				}
+			});
 			if (!res.ok) {
 				throw new Error(`Error HTTP, estado: ${res.status}`);
 			}

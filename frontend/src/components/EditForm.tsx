@@ -2,10 +2,12 @@ import { use } from "react";
 import { useParams } from "react-router";
 import { baseDir, domain, productSpecs } from "../utils/config";
 import { formatDateSave } from "../utils/functions";
+import useAuth from "../hooks/useAuth";
 
 export default function EditForm({ dataa, setStatus, setMessage }: { dataa: Promise<{ data: { [key: string]: any }; message: string }> | null, setStatus: Function, setMessage: Function }) {
 
 	const { product, id } = useParams();
+	const { token } = useAuth();
 
 	let dataU;
 	if (dataa == null) {
@@ -27,6 +29,7 @@ export default function EditForm({ dataa, setStatus, setMessage }: { dataa: Prom
 				body: JSON.stringify(jsonData),
 				headers: {
 					"Content-Type": "application/json",
+					"Authorization": token
 				}
 			});
 			if (!res.ok) {

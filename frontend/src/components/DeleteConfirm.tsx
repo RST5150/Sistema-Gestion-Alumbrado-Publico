@@ -1,5 +1,6 @@
 import { use, useState } from "react";
 import { useParams } from "react-router";
+import useAuth from "../hooks/useAuth";
 import { baseDir, domain, productSpecs } from "../utils/config";
 import { formatDateShow } from "../utils/functions";
 
@@ -7,6 +8,7 @@ export default function DeleteConfirm({ dataa, setStatus, setMessage }: { dataa:
 
 	const [ isConfirmedDelete, setConfirmedDelete ] = useState(false);
 	const { product, id } = useParams();
+	const { token } = useAuth();
 
 	let dataU;
 	if (dataa == null) {
@@ -22,6 +24,7 @@ export default function DeleteConfirm({ dataa, setStatus, setMessage }: { dataa:
 				method: "DELETE",
 				headers: {
 					"Content-Type": "application/json",
+					"Authorization": token
 				}
 			});
 			if (!res.ok) {

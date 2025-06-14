@@ -1,9 +1,11 @@
 import { useParams } from "react-router";
 import { baseDir, domain, productSpecs } from "../utils/config";
+import useAuth from "../hooks/useAuth";
 
 export default function CreateForm({ setStatus, setMessage }: { setStatus: Function, setMessage: Function }) {
 
 	const { product } = useParams();
+	const { token } = useAuth();
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -18,6 +20,7 @@ export default function CreateForm({ setStatus, setMessage }: { setStatus: Funct
 				body: JSON.stringify(jsonData),
 				headers: {
 					"Content-Type": "application/json",
+					"Authorization": token
 				}
 			});
 			if (!res.ok) {

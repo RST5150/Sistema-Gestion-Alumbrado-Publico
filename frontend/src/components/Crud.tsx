@@ -2,10 +2,17 @@ import { Suspense } from "react";
 import { domain, baseDir } from "../utils/config";
 import Table from "./Table";
 import { Link } from "react-router";
+import useAuth from "../hooks/useAuth";
 
 async function fetchData(p: string) {
-	const url = domain.concat(baseDir).concat("/").concat(p);
-	const res = await fetch(url);
+	const { token } = useAuth();
+	const url = `${domain}${baseDir}/${p}`;
+	const res = await fetch(url, {
+				method: "GET",
+				headers: {
+					"Authorization": token
+				}
+			});
 	return res.json();
 }
 
