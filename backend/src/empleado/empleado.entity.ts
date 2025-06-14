@@ -26,6 +26,9 @@ export class Empleado extends Base {
     @Property({nullable: false})
     rol!: string;
 
+    @Property({nullable: true})
+    clave!: string;
+
     @OneToMany(() => Mantenimiento, (mantenimiento) => mantenimiento.empleado, {lazy: true})
     mantenimientos = new Collection<Mantenimiento>(this);
 

@@ -8,6 +8,8 @@ const EMAIL_MIN = 5
 const EMAIL_MAX = 40
 const TEL_MIN = 5
 const TEL_MAX = 20
+const CLAVE_MIN = 6
+const CLAVE_MAX = 30
 const ROL = Rol
 const ERR_ID = `Es necesario un id`
 const ERR_DNI = `El dni debe tener ${DNI_LENGHT} caracteres`
@@ -21,6 +23,8 @@ const ERR_TEL_MIN = `El teléfono debe tener como mínimo ${TEL_MIN} caracteres`
 const ERR_TEL_MAX = `El teléfono debe tener como máximo ${TEL_MAX} caracteres`
 const ERR_ROL = `El rol debe ser uno de ${Object.values(ROL).join(', ')}`
 const ERR_FECHA = `La fecha debe ser una fecha válida`
+const ERR_CLAVE_MIN = `La clave debe tener como mínimo ${CLAVE_MIN} caracteres`
+const ERR_CLAVE_MAX = `La clave debe tener como máximo ${CLAVE_MAX} caracteres`
 
 const id = v.pipe(
     v.number(ERR_ID),
@@ -67,6 +71,12 @@ const rol = v.pipe(
     v.enum(ROL, ERR_ROL),
 )
 
+const clave = v.pipe(
+    v.string(),
+    v.minLength(CLAVE_MIN, ERR_CLAVE_MIN),
+    v.maxLength(CLAVE_MAX, ERR_CLAVE_MAX),
+)
+
 export const empleadoSchema = v.object({
     dni: dni,
     apellido: apellido,
@@ -75,6 +85,7 @@ export const empleadoSchema = v.object({
     telefono: v.optional(telefono),
     fechaIngreso: fechaIngreso,
     rol: rol,
+    clave: v.optional(clave),
 })
 
 export const empleadoOpcional = v.partial(empleadoSchema)
