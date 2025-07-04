@@ -13,7 +13,7 @@ const apiSecret = process.env.apiSecret
 async function findAll(req: Request, res: Response) {
     try {
         const empleados = await em.find(Empleado, {})
-        empleados.map(e => e.clave = "*")
+        empleados.map(e => { if (e.clave) e.clave = "*" } )
         res.json({data: empleados})
     } catch (err) {
         handleOrmError(res, err)
@@ -51,7 +51,7 @@ async function login(req: Request, res: Response) {
 			throw new Error("api secret no definido");
 		}
 		const token = jwt.sign({dni: empleado.dni}, apiSecret, {expiresIn: "1h"});
-		return res.status(201).json({token, "empleado": empleado.dni});
+		return res.status(201).json({token, "empleado": empleado.dni, "rol": empleado.rol});
 	} catch (err) {
 		console.error("Error al iniciar sesión", err);
 		res.status(500).json({"message": "Error al iniciar sesión"});
@@ -82,7 +82,11 @@ async function signup(req: Request, res: Response) {
 	}
 }
 async function add(req: Request, res: Response) {
-    try{
+    try {
+        const duplicated = await em.findOne(Empleado, {dni: res.locals.empleadoNuevo.dni})
+        if (duplicated) {
+            return res.status(400).json({message: "Ya existe un empleado con ese DNI"})
+        }
         const empleado = em.create(Empleado, res.locals.empleadoNuevo)
         await em.flush()
         res.status(201).json({message: "Empleado creado", data: empleado})

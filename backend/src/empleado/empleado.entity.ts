@@ -42,5 +42,6 @@ export enum Rol {
     Director = 'Director',
     Administrativo = 'Administrativo',
     Empleado = 'Empleado',
+    Almacenes = 'Almacenes'
 }
 
