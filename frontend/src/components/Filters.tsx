@@ -4,28 +4,39 @@ import Table from "./Table";
 import useAuth from "../hooks/useAuth";
 
 async function fetchDataU(p: string, args: Object) {
-	const { token } = useAuth();
-	let url;
-	if (Object.keys(args).length) {
-		url = `${domain}${baseDir}/${p}/findMany`;
-		const res = await fetch(url, {
-			method: "POST",
-			body: JSON.stringify(args),
-			headers: {
-				"Content-Type": "application/json",
-				"Authorization": token
+	try {
+		const { token } = useAuth();
+		let url;
+		if (Object.keys(args).length) {
+			url = `${domain}${baseDir}/${p}/findMany`;
+			const res = await fetch(url, {
+				method: "POST",
+				body: JSON.stringify(args),
+				headers: {
+					"Content-Type": "application/json",
+					"Authorization": token
+				}
+			});
+			if (!res.ok) {
+				throw new Error(`Error HTTP, estado: ${res.status}`);
 			}
-		});
-		return res.json();
-	} else {
-		url = `${domain}${baseDir}/${p}`;
-		const res = await fetch(url, {
+			return res.json();
+		} else {
+			url = `${domain}${baseDir}/${p}`;
+			const res = await fetch(url, {
 				method: "GET",
 				headers: {
 					"Authorization": token
 				}
 			});
-		return res.json();
+			if (!res.ok) {
+				throw new Error(`Error HTTP, estado: ${res.status}`);
+			}
+			return res.json();
+		}
+	} catch (error) {
+		console.error("Error obteniendo los datos: ", error);
+		throw error;
 	}
 }
 
