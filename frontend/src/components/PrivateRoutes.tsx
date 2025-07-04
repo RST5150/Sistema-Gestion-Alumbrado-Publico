@@ -1,17 +1,17 @@
-import { Navigate, Outlet } from "react-router";
 import useAuth from "../hooks/useAuth.jsx";
+import { Navigate, Outlet } from "react-router";
 
-export default function PrivateRoutes() {
+interface PrivateRoutesProps {
+	requiredRole?: string;
+}
 
-	const { token } = useAuth();
-
-	return (
-		<>
-		{ token ? (
-			<Outlet /> 
-		) : (
-			<Navigate to="/iniciar-sesion" />
-		)}
-		</>
-	)
+export default function PrivateRoutes({ requiredRole }: PrivateRoutesProps) {
+	const { token, rol } = useAuth();
+	if (!token) {
+		return <Navigate to="/iniciar-sesion" replace />;
+	}
+	if (requiredRole && rol !== requiredRole) {
+		return <Navigate to="/no-autorizado" replace />;
+	}
+	return <Outlet />;
 }

@@ -11,6 +11,7 @@ import AuthProvider from './providers/AuthProvider';
 import LogIn from './pages/LogIn';
 import PrivateRoutes from './components/PrivateRoutes';
 import SignUp from './pages/SignUp';
+import Unauthorized from './pages/Unauthorized';
 
 export default function App() {
 
@@ -23,7 +24,8 @@ export default function App() {
 				<Route path='/' element={<Home />}/>
 				<Route path='/iniciar-sesion' element={<LogIn />}/>
 				<Route path='/activar-cuenta' element={<SignUp />}/>
-				<Route element={<PrivateRoutes />}>
+				<Route path='/no-autorizado' element={<Unauthorized />}/>
+				<Route element={<PrivateRoutes requiredRole='Almacenes'/>}>
 					<Route path='/stock' element={<Stock />}/>
 					<Route path='/administracion'>
 						<Route index element={<Manage />}/>

@@ -1,6 +1,6 @@
 import useAuth from "../hooks/useAuth";
 import { baseDir, domain } from "../utils/config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router";
 
 export default function LogIn() {
@@ -8,7 +8,13 @@ export default function LogIn() {
 	const [ error, setError ] = useState("");
 	const [ message, setMessage ] = useState("");
 	const navigate = useNavigate();
-	const { login } = useAuth();
+	const { token, login } = useAuth();
+
+	useEffect(() => {
+		if (token) {
+			navigate("/");
+		}
+	}, [token]);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();

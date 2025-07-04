@@ -1,12 +1,21 @@
-import { Link } from "react-router";
+import useAuth from "../hooks/useAuth";
 import { baseDir, domain } from "../utils/config";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router";
 
 export default function SignUp() {
 
 	const [ error, setError ] = useState("");
 	const [ message, setMessage ] = useState("");
 	const [ isCreated, setCreated ] = useState(false);
+	const navigate = useNavigate();
+	const { token } = useAuth();
+
+	useEffect(() => {
+		if (token) {
+			navigate("/");
+		}
+	}, []);
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -44,13 +53,13 @@ export default function SignUp() {
 					return;
 				}
 				if (res.status >= 500 ) {
-					setMessage("Error interno durante la creación de la cuenta. Intente más tarde");
+					setMessage("Error interno durante la activación de la cuenta. Intente más tarde");
 					return;
 				}
 			}
 			setCreated(true);
 		} catch (error) {
-			console.error("Error iniciando sesión: ", error);
+			console.error("Error activando la cuenta: ", error);
 			throw error;
 		}
 	};
