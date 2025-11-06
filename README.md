@@ -2,7 +2,7 @@
 Repo del proyecto del sistema de gestión de alumbrado público, TP final para Analista Desarrollador Universitario en Sistemas
 
 ## Integrantes
-* XXXXX - Alvarez, Thiago
+* 48575 - Alvarez, Thiago
 * 47817 - Fernandez, Felipe
 * NO LO QUIERE DECIR - Romo, Matias
 * 44771 - Salvia, Ricardo
